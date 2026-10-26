@@ -1,0 +1,2806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stackly - Next-Gen Telemedicine Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <style>
+  /* ================= MODERN PROFESSIONAL NAVBAR ================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .nav-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 75px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logo */
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  /* Desktop Menu Links */
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Box-type Hover & Active States */
+  .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
+  }
+
+  /* Right Actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Primary Blue Login Button */
+  .login-btn {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  }
+
+  .login-btn:hover {
+    background-color: #0369a1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+  }
+
+  /* Mobile Hamburger Button */
+  .mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    z-index: 1001;
+  }
+
+  .mobile-toggle .bar {
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Active Hamburger Animation */
+  .mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .mobile-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Dropdown Panel directly below Navbar */
+  .mobile-dropdown {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 20px 5%;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.8);
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .mobile-dropdown.show {
+    display: flex;
+  }
+
+  .mobile-nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-link:hover, .mobile-nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+  }
+
+  .mobile-login-btn {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .desktop-nav, .desktop-only-btn {
+      display: none !important;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar" id="navbar">
+  <div class="nav-container">
+    
+    <!-- Left: Logo Slot -->
+    <a href="./index.html" class="logo-link">
+      <img src="./logo.webp" alt="Stackly Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('navFallbackText').style.display='block';" />
+      <span id="navFallbackText" style="display:none; color:#ffffff; font-weight:800; font-size:1.3rem;">💙 STACKLY</span>
+    </a>
+
+    <!-- Center: Desktop Menu -->
+    <nav class="nav-menu desktop-nav" id="desktopNav">
+      <a href="./index.html" class="nav-link ">Home</a>
+      <a href="./about.html" class="nav-link">About Us</a>
+      <a href="./our serves.html" class="nav-link ">Our Services</a>
+      <a href="./doctors.html" class="nav-link active">Find a Doctor</a>
+      <a href="./appointments.html" class="nav-link">Appointments</a>
+      <a href="./contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Right: Desktop Login Button & Mobile Hamburger Toggle -->
+    <div class="nav-actions">
+      <button class="login-btn desktop-only-btn" id="loginBtn">Login</button>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile Dropdown Menu (Appears Directly Below Navbar Header) -->
+  <div class="mobile-dropdown" id="mobileDropdown">
+    <a href="./index.html" class="mobile-nav-link ">Home</a>
+    <a href="./about.html" class="mobile-nav-link">About Us</a>
+    <a href="./our serves.html" class="mobile-nav-link">Our Services</a>
+    <a href="./doctors.html" class="mobile-nav-link active">Find a Doctor</a>
+    <a href="./appointments.html" class="mobile-nav-link">Appointments</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+    <button class="login-btn mobile-login-btn" id="mobileDropdownLoginBtn">Login</button>
+  </div>
+</header>
+
+<script>
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDropdown = document.getElementById('mobileDropdown');
+  const loginBtn = document.getElementById('loginBtn');
+  const mobileDropdownLoginBtn = document.getElementById('mobileDropdownLoginBtn');
+
+  // Toggle mobile dropdown menu directly below navbar
+  mobileToggle.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mobileDropdown.classList.toggle('show');
+  });
+
+  // Redirect Login actions directly to login.html page
+  function handleLoginRedirect() {
+    window.location.href = 'login.html';
+  }
+
+  loginBtn.addEventListener('click', handleLoginRedirect);
+  mobileDropdownLoginBtn.addEventListener('click', handleLoginRedirect);
+</script>
+<style>
+  /* ================= FIND A DOCTOR: HERO SECTION WITH VALIDATION ================= */
+  .find-doctor-hero {
+    position: relative;
+    padding: 100px 0 80px 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #0f172a;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .find-doctor-hero-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Header Copy */
+  .find-hero-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 40px auto;
+  }
+
+  .find-hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    color: #0284c7;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    border: 1px solid rgba(2, 132, 199, 0.2);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+  }
+
+  .find-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .find-hero-title span {
+    color: #0284c7;
+  }
+
+  .find-hero-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Interactive Search & Filter Box */
+  .doctor-search-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1);
+    border: 1px solid #e2e8f0;
+    max-width: 960px;
+    margin: 0 auto 15px auto;
+  }
+
+  .search-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .search-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .search-input-group label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-input-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 1rem;
+    color: #0284c7;
+    pointer-events: none;
+  }
+
+  .search-control {
+    width: 100%;
+    padding: 14px 14px 14px 42px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.95rem;
+    color: #0f172a;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .search-control:focus {
+    border-color: #0284c7;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+  }
+
+  .btn-search-doctor {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 22px rgba(2, 132, 199, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    margin-top: auto;
+  }
+
+  .btn-search-doctor:hover {
+    background-color: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(2, 132, 199, 0.45);
+  }
+
+  /* Form Error Message Alert */
+  .search-error-msg {
+    max-width: 960px;
+    margin: 0 auto 25px auto;
+    color: #ef4444;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    display: none;
+  }
+
+  .search-error-msg.visible {
+    display: block;
+    animation: shakeError 0.3s ease-in-out;
+  }
+
+  @keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  /* Quick Specialty Tags */
+  .quick-specialties {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .quick-tag-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #64748b;
+  }
+
+  .quick-tag-btn {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+  }
+
+  .quick-tag-btn:hover {
+    background-color: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .search-form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .btn-search-doctor {
+      grid-column: span 2;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .find-doctor-hero {
+      padding: 60px 0 50px 0;
+    }
+
+    .find-hero-title {
+      font-size: 2.1rem;
+    }
+
+    .doctor-search-card {
+      padding: 18px;
+    }
+
+    .search-form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .btn-search-doctor {
+      grid-column: span 1;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: HERO SECTION -->
+<br>
+<br><section class="find-doctor-hero" id="find-doctor-hero">
+  <div class="find-doctor-hero-container">
+    
+    <!-- Header Text -->
+    <div class="find-hero-header">
+      <div class="find-hero-pill">
+        👨‍⚕️ Top Verified Specialists
+      </div>
+
+      <h1 class="find-hero-title">
+        Find & Book the <span>Right Doctor</span> for You
+      </h1>
+
+      <p class="find-hero-subtitle">
+        Search through 1,200+ top-rated doctors, filter by specialty or location, and book instant online consultations.
+      </p>
+    </div>
+
+    <!-- Search Card -->
+    <div class="doctor-search-card">
+      <form id="doctorSearchForm" class="search-form-grid">
+        
+        <!-- Search Name -->
+        <div class="search-input-group">
+          <label for="doctorName">Doctor Name</label>
+          <div class="search-input-wrapper">
+            <span class="search-input-icon">🔍</span>
+            <input type="text" id="doctorName" class="search-control" placeholder="e.g. Dr. Priya Sharma">
+          </div>
+        </div>
+
+        <!-- Specialty Filter -->
+        <div class="search-input-group">
+          <label for="specialtySelect">Specialty</label>
+          <div class="search-input-wrapper">
+            <span class="search-input-icon">🩺</span>
+            <select id="specialtySelect" class="search-control">
+              <option value="">Select Specialty</option>
+              <option value="cardiology">Cardiology</option>
+              <option value="dermatology">Dermatology</option>
+              <option value="pediatrics">Pediatrics</option>
+              <option value="orthopedics">Orthopedics</option>
+              <option value="neurology">Neurology</option>
+              <option value="general">General Medicine</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Location Filter -->
+        <div class="search-input-group">
+          <label for="locationInput">Location</label>
+          <div class="search-input-wrapper">
+            <span class="search-input-icon">📍</span>
+            <input type="text" id="locationInput" class="search-control" placeholder="City or Online">
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <button type="submit" class="btn-search-doctor" id="searchDoctorBtn">
+          Search Doctors &rarr;
+        </button>
+
+      </form>
+    </div>
+
+    <!-- Validation Error Alert Message -->
+    <div id="searchErrorMsg" class="search-error-msg">
+      ⚠️ Please fill in all search details (Doctor Name, Specialty, and Location) before proceeding.
+    </div>
+
+    <!-- Quick Tags -->
+    <div class="quick-specialties">
+      <span class="quick-tag-label">Popular Searches:</span>
+      <a href="404.html" class="quick-tag-btn">Cardiologist</a>
+      <a href="404.html" class="quick-tag-btn">Dermatologist</a>
+      <a href="404.html" class="quick-tag-btn">Pediatrician</a>
+      <a href="404.html" class="quick-tag-btn">General Physician</a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('doctorSearchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const doctorName = document.getElementById('doctorName').value.trim();
+    const specialty = document.getElementById('specialtySelect').value;
+    const location = document.getElementById('locationInput').value.trim();
+    const errorMsg = document.getElementById('searchErrorMsg');
+
+    // Check if any field is empty
+    if (!doctorName || !specialty || !location) {
+      errorMsg.classList.add('visible');
+      return;
+    }
+
+    // Hide error if filled and redirect to 404 page
+    errorMsg.classList.remove('visible');
+    window.location.href = '404.html';
+  });
+
+  document.querySelectorAll('.quick-tag-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = '404.html';
+    });
+  });
+</script>
+<style>
+  /* ================= FIND A DOCTOR: DIRECTORY RESULTS SECTION ================= */
+  .doctor-directory-section {
+    padding: 80px 0 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .doctor-directory-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Results Bar */
+  .directory-results-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .results-count-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .results-count-title span {
+    color: #0284c7;
+  }
+
+  .directory-sort-select {
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.9rem;
+    color: #0f172a;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .directory-sort-select:focus {
+    border-color: #0284c7;
+    background-color: #ffffff;
+  }
+
+  /* Doctor Cards Grid (3 Columns) */
+  .doctor-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .doctor-profile-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .doctor-profile-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  /* Top Card Header */
+  .doctor-card-top {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .doctor-avatar-box {
+    width: 75px;
+    height: 75px;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #e0f2fe;
+    flex-shrink: 0;
+  }
+
+  .doctor-avatar-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .doctor-meta-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .doctor-name-tag {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 2px;
+  }
+
+  .doctor-specialty-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0284c7;
+    margin-bottom: 6px;
+  }
+
+  .doctor-rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0f172a;
+    background: #f8fafc;
+    padding: 3px 10px;
+    border-radius: 50px;
+    width: fit-content;
+    border: 1px solid #e2e8f0;
+  }
+
+  .doctor-rating-badge span {
+    color: #f59e0b;
+  }
+
+  /* Card Details List */
+  .doctor-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .doctor-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .doctor-detail-row strong {
+    color: #0f172a;
+  }
+
+  /* Card Bottom Action Bar */
+  .doctor-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .doctor-fee-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .doctor-fee-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+  }
+
+  .doctor-fee-amount {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .btn-book-doctor-card {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-book-doctor-card:hover {
+    background-color: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(2, 132, 199, 0.4);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1024px) {
+    .doctor-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .doctor-directory-section {
+      padding: 60px 0;
+    }
+
+    .doctor-cards-grid {
+      grid-template-columns: 1fr;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .directory-results-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: DIRECTORY RESULTS SECTION -->
+<section class="doctor-directory-section" id="doctor-directory">
+  <div class="doctor-directory-container">
+    
+    <!-- Results Info & Sorting Bar -->
+    <div class="directory-results-bar">
+      <h2 class="results-count-title">
+        Available Doctors <span></span>
+      </h2>
+
+    </div>
+
+    <!-- 3 Columns Doctor Cards Grid -->
+    <div class="doctor-cards-grid">
+      
+      <!-- Doctor Card 1 -->
+      <div class="doctor-profile-card">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar-box">
+            <img src="./doc1.webp" alt="Dr. Priya Sharma" onerror="this.src='https://images.unsplash.com/photo-1594824813566-88855ce7890b?auto=format&fit=crop&w=400&q=80'" />
+          </div>
+          <div class="doctor-meta-info">
+            <h3 class="doctor-name-tag">Dr. Priya Sharma</h3>
+            <span class="doctor-specialty-tag">Cardiologist</span>
+            <div class="doctor-rating-badge">
+              <span>★</span> 4.8 (2,450 reviews)
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-details-list">
+          <div class="doctor-detail-row">
+            <span>Exp:</span> <strong>12+ Years Experience</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Hospital:</span> <strong>Apollo Heart Institute</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Languages:</span> <strong>English, Hindi, Kannada</strong>
+          </div>
+        </div>
+
+        <div class="doctor-card-footer">
+          <div class="doctor-fee-box">
+            <span class="doctor-fee-label">Consultation Fee</span>
+            <span class="doctor-fee-amount">₹699</span>
+          </div>
+          <a href="404.html" class="btn-book-doctor-card">Book Now &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Doctor Card 2 -->
+      <div class="doctor-profile-card">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar-box">
+            <img src="./doc2.webp" alt="Dr. Rahul Mehta" onerror="this.src='https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=80'" />
+          </div>
+          <div class="doctor-meta-info">
+            <h3 class="doctor-name-tag">Dr. Rahul Mehta</h3>
+            <span class="doctor-specialty-tag">Dermatologist</span>
+            <div class="doctor-rating-badge">
+              <span>★</span> 4.7 (1,820 reviews)
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-details-list">
+          <div class="doctor-detail-row">
+            <span>Exp:</span> <strong>9+ Years Experience</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Hospital:</span> <strong>SkinCare & Aesthetic Clinic</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Languages:</span> <strong>English, Hindi</strong>
+          </div>
+        </div>
+
+        <div class="doctor-card-footer">
+          <div class="doctor-fee-box">
+            <span class="doctor-fee-label">Consultation Fee</span>
+            <span class="doctor-fee-amount">₹499</span>
+          </div>
+          <a href="404.html" class="btn-book-doctor-card">Book Now &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Doctor Card 3 -->
+      <div class="doctor-profile-card">
+        <div class="doctor-card-top">
+          <div class="doctor-avatar-box">
+            <img src="./doc3.webp" alt="Dr. Sneha Iyer" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80'" />
+          </div>
+          <div class="doctor-meta-info">
+            <h3 class="doctor-name-tag">Dr. Sneha Iyer</h3>
+            <span class="doctor-specialty-tag">Pediatrician</span>
+            <div class="doctor-rating-badge">
+              <span>★</span> 4.9 (3,120 reviews)
+            </div>
+          </div>
+        </div>
+
+        <div class="doctor-details-list">
+          <div class="doctor-detail-row">
+            <span>Exp:</span> <strong>15+ Years Experience</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Hospital:</span> <strong>Rainbow Children's Hospital</strong>
+          </div>
+          <div class="doctor-detail-row">
+            <span>Languages:</span> <strong>English, Tamil, Telugu</strong>
+          </div>
+        </div>
+
+        <div class="doctor-card-footer">
+          <div class="doctor-fee-box">
+            <span class="doctor-fee-label">Consultation Fee</span>
+            <span class="doctor-fee-amount">₹599</span>
+          </div>
+          <a href="404.html" class="btn-book-doctor-card">Book Now &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.btn-book-doctor-card').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = '404.html';
+    });
+  });
+</script>
+
+<style>
+  /* ================= FIND A DOCTOR: WHY CHOOSE US SECTION ================= */
+  .find-why-section {
+    padding: 100px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .find-why-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .find-why-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .find-why-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .find-why-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .find-why-title span {
+    color: #0284c7;
+  }
+
+  .find-why-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 3 Columns Grid */
+  .find-why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .find-why-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 36px 28px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .find-why-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  .find-why-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    transition: all 0.35s ease;
+  }
+
+  .find-why-card:hover .find-why-icon-box {
+    background: #0284c7;
+    color: #ffffff;
+    transform: scale(1.08) rotate(5deg);
+  }
+
+  .find-why-card-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .find-why-card-desc {
+    font-size: 0.92rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .find-why-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .find-why-section {
+      padding: 70px 0;
+    }
+
+    .find-why-title {
+      font-size: 2.1rem;
+    }
+
+    .find-why-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: WHY CHOOSE US SECTION -->
+<section class="find-why-section" id="find-why-us">
+  <div class="find-why-container">
+    
+    <!-- Section Header -->
+    <div class="find-why-header">
+      <span class="find-why-tag">Why Choose Our Doctors</span>
+      <h2 class="find-why-title">Excellence in <span>Patient Care</span></h2>
+      <p class="find-why-subtitle">We bring you trusted medical professionals committed to providing safe, compassionate, and personalized healthcare.</p>
+    </div>
+
+    <!-- 3 Columns Feature Grid -->
+    <div class="find-why-grid">
+      
+      <!-- Card 1 -->
+      <div class="find-why-card">
+        <div class="find-why-icon-box">🛡️</div>
+        <h3 class="find-why-card-title">100% Verified Credentials</h3>
+        <p class="find-why-card-desc">Every doctor on our platform goes through rigorous background checks, qualification reviews, and medical board verification.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="find-why-card">
+        <div class="find-why-icon-box">⚡</div>
+        <h3 class="find-why-card-title">Instant Appointment Booking</h3>
+        <p class="find-why-card-desc">Skip long waiting lines. Schedule video or in-person visits with your preferred specialist instantly.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="find-why-card">
+        <div class="find-why-icon-box">🔒</div>
+        <h3 class="find-why-card-title">Secure & Confidential</h3>
+        <p class="find-why-card-desc">Your medical history, prescriptions, and consultation chats are protected with end-to-end encryption and strict privacy standards.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= FIND A DOCTOR: SPECIALTIES DEPARTMENTS SECTION ================= */
+  .find-departments-section {
+    padding: 100px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .find-departments-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .find-departments-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 55px auto;
+  }
+
+  .find-departments-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .find-departments-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .find-departments-title span {
+    color: #0284c7;
+  }
+
+  .find-departments-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 4 Columns Departments Grid */
+  .find-departments-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .department-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    padding: 28px 24px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .department-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+    background-color: #f0f9ff;
+  }
+
+  .department-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background-color: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    transition: all 0.35s ease;
+  }
+
+  .department-card:hover .department-icon-box {
+    background-color: #0284c7;
+    color: #ffffff;
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .department-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+  }
+
+  .department-card:hover .department-name {
+    color: #0284c7;
+  }
+
+  .department-count {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .department-arrow-link {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .department-card:hover .department-arrow-link {
+    transform: translateX(4px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1100px) {
+    .find-departments-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .find-departments-section {
+      padding: 70px 0;
+    }
+
+    .find-departments-title {
+      font-size: 2.1rem;
+    }
+
+    .find-departments-grid {
+      grid-template-columns: 1fr;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: SPECIALTIES DEPARTMENTS SECTION -->
+<section class="find-departments-section" id="find-departments">
+  <div class="find-departments-container">
+    
+    <!-- Section Header -->
+    <div class="find-departments-header">
+      <span class="find-departments-tag">Medical Specialties</span>
+      <h2 class="find-departments-title">Explore by <span>Department</span></h2>
+      <p class="find-departments-subtitle">Find certified specialists across diverse medical fields for your specific health requirements.</p>
+    </div>
+
+    <!-- 4 Columns Grid -->
+    <div class="find-departments-grid">
+      
+      <!-- Card 1 -->
+      <a href="404.html" class="department-card">
+        <div class="department-icon-box">❤️</div>
+        <h3 class="department-name">Cardiology</h3>
+        <span class="department-count">185+ Doctors Available</span>
+        <span class="department-arrow-link">Explore Doctors &rarr;</span>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="404.html" class="department-card">
+        <div class="department-icon-box">🩺</div>
+        <h3 class="department-name">Dermatology</h3>
+        <span class="department-count">140+ Doctors Available</span>
+        <span class="department-arrow-link">Explore Doctors &rarr;</span>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="404.html" class="department-card">
+        <div class="department-icon-box">👶</div>
+        <h3 class="department-name">Pediatrics</h3>
+        <span class="department-count">210+ Doctors Available</span>
+        <span class="department-arrow-link">Explore Doctors &rarr;</span>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="404.html" class="department-card">
+        <div class="department-icon-box">🦴</div>
+        <h3 class="department-name">Orthopedics</h3>
+        <span class="department-count">125+ Doctors Available</span>
+        <span class="department-arrow-link">Explore Doctors &rarr;</span>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= FIND A DOCTOR: EXPERT SPOTLIGHT SECTION ================= */
+  .find-spotlight-section {
+    padding: 110px 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Decorative Glow */
+  .find-spotlight-section::before {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    right: -80px;
+    width: 380px;
+    height: 380px;
+    background: rgba(2, 132, 199, 0.2);
+    filter: blur(100px);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .find-spotlight-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Left Side: Expert Photo Card */
+  .spotlight-img-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 460px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: #0284c7;
+  }
+
+  .spotlight-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .spotlight-img-wrapper:hover .spotlight-img {
+    transform: scale(1.04);
+  }
+
+  /* Floating Experience Badge */
+  .spotlight-exp-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 14px 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spotlight-exp-badge strong {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #38bdf8;
+    line-height: 1;
+  }
+
+  .spotlight-exp-badge span {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    font-weight: 600;
+  }
+
+  /* Right Side: Copy & Details */
+  .spotlight-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spotlight-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .spotlight-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .spotlight-desc {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  /* Highlight Features List */
+  .spotlight-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 35px;
+  }
+
+  .spotlight-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .spotlight-feature-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  /* Action Button */
+  .btn-spotlight-consult {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .btn-spotlight-consult:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .find-spotlight-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .spotlight-content {
+      align-items: flex-start;
+    }
+
+    .spotlight-img-wrapper {
+      max-width: 100%;
+      height: 380px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .find-spotlight-section {
+      padding: 70px 0;
+    }
+
+    .spotlight-title {
+      font-size: 2.1rem;
+    }
+
+    .spotlight-features {
+      grid-template-columns: 1fr;
+    }
+
+    .spotlight-img-wrapper {
+      height: 300px;
+    }
+
+    .btn-spotlight-consult {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: EXPERT SPOTLIGHT SECTION -->
+<section class="find-spotlight-section" id="find-expert-spotlight">
+  <div class="find-spotlight-container">
+    
+    <!-- Left Column: Expert Image Card -->
+    <div class="spotlight-img-wrapper">
+      <img src="./doc1.webp" alt="Dr. Rajesh Kumar" class="spotlight-img" onerror="this.src='https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&q=80'" />
+      
+      <div class="spotlight-exp-badge">
+        <div>
+          <strong>18+</strong>
+          <span>Years Exp.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Expert Info & Details -->
+    <div class="spotlight-content">
+      <span class="spotlight-tag">Featured Chief Specialist</span>
+      <h2 class="spotlight-title">Dr. Rajesh Kumar, MS, FRCS</h2>
+      <p class="spotlight-desc">
+        Senior Consultant Cardiovascular Surgeon with over two decades of surgical excellence. Dedicated to providing advanced heart care, preventive cardiology guidance, and compassionate online consultations.
+      </p>
+
+      <div class="spotlight-features">
+        <div class="spotlight-feature-item">
+          <span class="spotlight-feature-icon">✓</span> AIIMS Gold Medalist
+        </div>
+        <div class="spotlight-feature-item">
+          <span class="spotlight-feature-icon">✓</span> 5,000+ Successful Surgeries
+        </div>
+        <div class="spotlight-feature-item">
+          <span class="spotlight-feature-icon">✓</span> International Fellow
+        </div>
+        <div class="spotlight-feature-item">
+          <span class="spotlight-feature-icon">✓</span> 4.9 Star Patient Rating
+        </div>
+      </div>
+
+      <a href="404.html" class="btn-spotlight-consult" id="spotlightConsultBtn">
+        Consult Dr. Rajesh &rarr;
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('spotlightConsultBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= FIND A DOCTOR: QUICK AVAILABILITY BANNER SECTION ================= */
+  .find-availability-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .find-availability-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Glassmorphic Main Card */
+  .availability-glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(2, 132, 199, 0.2);
+    border-radius: 30px;
+    padding: 60px 50px;
+    box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.15);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 50px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative background gradient orb */
+  .availability-glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 250px;
+    height: 250px;
+    background: rgba(56, 189, 248, 0.2);
+    filter: blur(60px);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Left Column Content */
+  .availability-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .availability-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .availability-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .availability-title span {
+    color: #0284c7;
+  }
+
+  .availability-desc {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 30px;
+  }
+
+  .availability-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 35px;
+  }
+
+  .availability-feature-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .availability-check-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Right Column Action Box */
+  .availability-action-box {
+    background: #0f172a;
+    border-radius: 20px;
+    padding: 36px 30px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.2);
+    position: relative;
+    z-index: 2;
+  }
+
+  .action-box-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .action-box-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 8px;
+  }
+
+  .action-box-subtitle {
+    font-size: 0.92rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .btn-instant-book {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 22px rgba(2, 132, 199, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-instant-book:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(56, 189, 248, 0.45);
+    color: #0f172a;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .availability-glass-card {
+      grid-template-columns: 1fr;
+      padding: 40px 25px;
+      gap: 35px;
+    }
+
+    .availability-content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .availability-features-list {
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .find-availability-section {
+      padding: 70px 0;
+    }
+
+    .availability-title {
+      font-size: 2.1rem;
+    }
+
+    .availability-action-box {
+      padding: 28px 20px;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: QUICK AVAILABILITY BANNER SECTION -->
+<section class="find-availability-section" id="find-availability">
+  <div class="find-availability-container">
+    
+    <div class="availability-glass-card">
+      
+      <!-- Left Info Column -->
+      <div class="availability-content">
+        <span class="availability-tag">Live Slot Tracking</span>
+        <h2 class="availability-title">Need an Urgent <span>Consultation</span>?</h2>
+        <p class="availability-desc">
+          Check real-time doctor availability and secure an immediate video or clinic appointment without waiting in long queues.
+        </p>
+
+        <div class="availability-features-list">
+          <div class="availability-feature-row">
+            <span class="availability-check-icon">✓</span> Available slots updated every 60 seconds
+          </div>
+          <div class="availability-feature-row">
+            <span class="availability-check-icon">✓</span> Direct video link sent instantly upon booking confirmation
+          </div>
+          <div class="availability-feature-row">
+            <span class="availability-check-icon">✓</span> Free rescheduling if your schedule changes
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Action Card Column -->
+      <div class="availability-action-box">
+        <div class="action-box-icon">⚡</div>
+        <h3 class="action-box-title">Book in Under 2 Minutes</h3>
+        <p class="action-box-subtitle">Select your preferred doctor, pick an open time slot, and confirm instantly.</p>
+        <a href="404.html" class="btn-instant-book" id="instantBookSlotBtn">
+          Check Available Slots &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('instantBookSlotBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+
+<style>
+  /* ================= FIND A DOCTOR: FAQ SECTION ================= */
+  .find-faq-section {
+    padding: 100px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .find-faq-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .find-faq-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+  }
+
+  .find-faq-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .find-faq-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .find-faq-title span {
+    color: #0284c7;
+  }
+
+  .find-faq-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Accordion Wrapper */
+  .find-faq-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .find-faq-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background-color: #f8fafc;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .find-faq-item.active {
+    background-color: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.08);
+  }
+
+  .find-faq-btn {
+    width: 100%;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-family: inherit;
+  }
+
+  .find-faq-item.active .find-faq-btn {
+    color: #0284c7;
+  }
+
+  .find-faq-icon {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0284c7;
+    transition: transform 0.3s ease;
+  }
+
+  .find-faq-item.active .find-faq-icon {
+    transform: rotate(45deg);
+  }
+
+  .find-faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+  }
+
+  .find-faq-item.active .find-faq-content {
+    max-height: 200px;
+    padding: 0 24px 20px 24px;
+  }
+
+  .find-faq-content p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 640px) {
+    .find-faq-section {
+      padding: 70px 0;
+    }
+
+    .find-faq-title {
+      font-size: 2.1rem;
+    }
+
+    .find-faq-btn {
+      padding: 16px 18px;
+      font-size: 0.95rem;
+    }
+
+    .find-faq-content {
+      padding: 0 18px;
+    }
+
+    .find-faq-item.active .find-faq-content {
+      padding: 0 18px 16px 18px;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: FAQ SECTION -->
+<section class="find-faq-section" id="find-faq">
+  <div class="find-faq-container">
+    
+    <!-- Section Header -->
+    <div class="find-faq-header">
+      <span class="find-faq-tag">Got Questions?</span>
+      <h2 class="find-faq-title">Frequently Asked <span>Questions</span></h2>
+      <p class="find-faq-subtitle">Everything you need to know about booking appointments and consulting with our specialists.</p>
+    </div>
+
+    <!-- Accordion List -->
+    <div class="find-faq-wrapper">
+      
+      <!-- FAQ 1 -->
+      <div class="find-faq-item ">
+        <button type="button" class="find-faq-btn">
+          How do I schedule an appointment with a specialist?
+          <span class="find-faq-icon">+</span>
+        </button>
+        <div class="find-faq-content">
+          <p>You can search for doctors by name, specialty, or location using our search bar, and click 'Book Now' on any doctor card to secure your preferred time slot.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="find-faq-item">
+        <button type="button" class="find-faq-btn">
+          Can I get a digital prescription after my consultation?
+          <span class="find-faq-icon">+</span>
+        </button>
+        <div class="find-faq-content">
+          <p>Yes! Once your video or chat consultation concludes, your doctor will issue a verified digital prescription directly accessible through your platform account.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="find-faq-item">
+        <button type="button" class="find-faq-btn">
+          Are the doctors on Stackly verified?
+          <span class="find-faq-icon">+</span>
+        </button>
+        <div class="find-faq-content">
+          <p>Absolutely. All medical professionals undergo strict credential verification, qualification reviews, and medical board licensing checks before joining.</p>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="find-faq-item">
+        <button type="button" class="find-faq-btn">
+          What is the cancellation or rescheduling policy?
+          <span class="find-faq-icon">+</span>
+        </button>
+        <div class="find-faq-content">
+          <p>You can easily reschedule or cancel your appointment up to 2 hours before the scheduled consultation time without any extra charges.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.find-faq-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const faqItem = button.parentElement;
+      const isOpen = faqItem.classList.contains('active');
+
+      // Close all items
+      document.querySelectorAll('.find-faq-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // Open current if it wasn't open
+      if (!isOpen) {
+        faqItem.classList.add('active');
+      }
+    });
+  });
+</script>
+<style>
+  /* ================= FIND A DOCTOR: FINAL CTA SECTION ================= */
+  .find-final-cta-section {
+    padding: 110px 0;
+    position: relative;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 132, 199, 0.88) 50%, rgba(15, 23, 42, 0.96) 100%),
+                url('./abouts.webp') center/cover no-repeat;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .find-final-cta-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .find-final-cta-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .find-final-cta-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .find-final-cta-title span {
+    color: #38bdf8;
+  }
+
+  .find-final-cta-subtitle {
+    font-size: 1.05rem;
+    color: #e2e8f0;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 600px;
+  }
+
+  .find-final-cta-btn-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 45px;
+  }
+
+  .btn-find-final-primary {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-find-final-primary:hover {
+    background-color: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(2, 132, 199, 0.55);
+  }
+
+  .btn-find-final-secondary {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.35s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-find-final-secondary:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Trust Indicators Bar */
+  .find-final-trust-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    width: 100%;
+  }
+
+  .find-final-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #cbd5e1;
+  }
+
+  .find-final-trust-icon {
+    color: #38bdf8;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 768px) {
+    .find-final-cta-section {
+      padding: 80px 0;
+    }
+
+    .find-final-cta-title {
+      font-size: 2.2rem;
+    }
+
+    .find-final-cta-btn-group {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn-find-final-primary,
+    .btn-find-final-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .find-final-trust-bar {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>
+
+<!-- FIND A DOCTOR: FINAL CTA SECTION -->
+<section class="find-final-cta-section" id="find-final-cta">
+  <div class="find-final-cta-container">
+    
+    <span class="find-final-cta-tag">Take Control of Your Health</span>
+
+    <h2 class="find-final-cta-title">
+      Ready to Consult with an <span>Expert Doctor</span>?
+    </h2>
+
+    <p class="find-final-cta-subtitle">
+      Connect with trusted specialists instantly and start your journey towards better health today.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="find-final-cta-btn-group">
+      <a href="404.html" class="btn-find-final-primary" id="finalCtaBookBtn">
+        Book Appointment &rarr;
+      </a>
+      <a href="404.html" class="btn-find-final-secondary" id="finalCtaSupportBtn">
+        Contact Support
+      </a>
+    </div>
+
+    <!-- Trust Bar -->
+    <div class="find-final-trust-bar">
+      <div class="find-final-trust-item">
+        <span class="find-final-trust-icon">🛡️</span> Verified Physicians
+      </div>
+      <div class="find-final-trust-item">
+        <span class="find-final-trust-icon">🔒</span> 100% Secure Data
+      </div>
+      <div class="find-final-trust-item">
+        <span class="find-final-trust-icon">⚡</span> Instant Booking
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('finalCtaBookBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('finalCtaSupportBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  /* ================= FOOTER SECTION STYLING ================= */
+  .footer-section {
+    background-color: black;
+    color: #94a3b8;
+    padding: 80px 0 30px 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Grid Layout with top-aligned columns */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 60px;
+  }
+
+  /* Individual Footer Column Container */
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* Fixed Height Slot for Header / Logo Area to Ensure Perfect Line Alignment */
+  .footer-header-slot {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .footer-logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-logo-fallback {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Standardized Column Headings */
+  .footer-col-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    padding-bottom: 8px;
+    position: relative;
+    display: inline-block;
+    line-height: 1.2;
+  }
+
+  .footer-col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background-color: #0284c7;
+    border-radius: 2px;
+  }
+
+  /* Paragraph Text in Brand Column */
+  .footer-brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0 0 24px 0;
+    max-width: 300px;
+  }
+
+  /* Circular Social Icons */
+  .footer-social-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .social-circle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-circle-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+    transition: fill 0.2s ease;
+  }
+
+  .social-circle-btn:hover {
+    background-color: #0284c7;
+    transform: translateY(-2px);
+  }
+
+  /* Uniform Link Lists (Strict Vertical Alignment with Headings) */
+  .footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .footer-links-list li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-links-list a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-links-list a span {
+    color: #0284c7;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .footer-links-list a:hover {
+    color: #38bdf8;
+    transform: translateX(4px);
+  }
+
+  /* Contact List Items */
+  .footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  .footer-contact-icon {
+    color: #0284c7;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Subscribe Section Layout */
+  .subscribe-wrapper {
+    width: 100%;
+  }
+
+  .subscribe-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+  }
+
+  .subscribe-input-group {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+  }
+
+  .subscribe-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.85rem;
+  }
+
+  .subscribe-input::placeholder {
+    color: #64748b;
+  }
+
+  .btn-subscribe-send {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .btn-subscribe-send svg {
+    width: 14px;
+    height: 14px;
+    fill: #ffffff;
+  }
+
+  .btn-subscribe-send:hover {
+    background-color: #0369a1;
+  }
+
+  .subscribe-error-msg {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    min-height: 16px;
+  }
+
+  /* Footer Bottom Bar */
+  .footer-bottom {
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-bottom-links a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-bottom-links a:hover {
+    color: #38bdf8;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 992px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 35px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-section {
+      padding: 60px 0 25px 0;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-header-slot {
+      height: auto;
+      margin-bottom: 15px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- FOOTER SECTION -->
+<footer class="footer-section" id="footer">
+  <div class="footer-container">
+    
+    <div class="footer-grid">
+      
+      <!-- Column 1: Logo & Brand Information -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+         <br>
+         <br> <a href="./index.html">
+          <img src="./logo.webp" alt="Stackly Logo" class="footer-logo-img" onerror="this.style.display='none'; document.getElementById('footerLogoFallback').style.display='flex';" /></a>
+          <div id="footerLogoFallback" class="footer-logo-fallback" style="display:none;">
+            
+          </div>
+        </div>
+
+        <p class="footer-brand-desc">
+          Delivering patient-centered medical care with compassion, clinical excellence, and state-of-the-art innovation.
+        </p>
+
+        <div class="footer-social-links">
+          <a href="404.html" class="social-circle-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7.5v-3H10V9.5C10 7.01 11.49 5.6 13.77 5.6c1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 3h-2.33v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Quick Links</h4>
+        </div>
+        <ul class="footer-links-list">
+           <li><a href="./index.html"><span>&gt;</span> Home</a></li>
+          <li><a href="./about.html"><span>&gt;</span> About Us</a></li>
+          <li><a href="./our serves.html"><span>&gt;</span> Services</a></li>
+          <li><a href="./doctors.html"><span>&gt;</span> Doctors</a></li>
+          <li><a href="./appointments.html"><span>&gt;</span> Appoinments</a></li>
+          <li><a href="./contact.html"><span>&gt;</span> Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Our Services -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Our Services</h4>
+        </div>
+        <ul class="footer-links-list">
+          <li><a href="404.html"><span>&gt;</span> Primary Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Health Plans</a></li>
+          <li><a href="404.html"><span>&gt;</span> Patient Reviews</a></li>
+          <li><a href="404.html"><span>&gt;</span> Specialist Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Working Hours</a></li>
+           <li><a href="404.html"><span>&gt;</span> Checkups List</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Info & Newsletter -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Contact Info</h4>
+        </div>
+        
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span>Salem, Tamil Nadu, India</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span>+91 89718 62253</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <span>telemedicine@stacklyhealth.com</span>
+          </div>
+        </div>
+
+        <div class="subscribe-wrapper">
+          <div class="subscribe-title">Subscribe for Health Tips</div>
+          <div class="subscribe-input-group">
+            <input type="email" id="footerSubscribeEmail" class="subscribe-input" placeholder="Enter your email" />
+            <button type="button" id="footerSubscribeBtn" class="btn-subscribe-send" aria-label="Subscribe">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+          <div class="subscribe-error-msg" id="footerSubscribeError"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly Healthcare. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms of Service</a>
+        <a href="404.html">Patient Rights</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  document.getElementById('footerSubscribeBtn').addEventListener('click', function() {
+    const emailInput = document.getElementById('footerSubscribeEmail');
+    const email = emailInput.value.trim().toLowerCase();
+    const errorMsg = document.getElementById('footerSubscribeError');
+
+    if (!email) {
+      errorMsg.textContent = 'Please enter your email address.';
+      return;
+    }
+
+    if (!email.endsWith('@gmail.com')) {
+      errorMsg.textContent = 'Email address must end with @gmail.com';
+      return;
+    }
+
+    errorMsg.textContent = '';
+    window.location.href = '404.html';
+  });
+</script>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>

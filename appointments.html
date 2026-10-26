@@ -1,0 +1,3660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stackly - Next-Gen Telemedicine Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <style>
+  /* ================= MODERN PROFESSIONAL NAVBAR ================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .nav-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 75px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logo */
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  /* Desktop Menu Links */
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Box-type Hover & Active States */
+  .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
+  }
+
+  /* Right Actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Primary Blue Login Button */
+  .login-btn {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  }
+
+  .login-btn:hover {
+    background-color: #0369a1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+  }
+
+  /* Mobile Hamburger Button */
+  .mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    z-index: 1001;
+  }
+
+  .mobile-toggle .bar {
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Active Hamburger Animation */
+  .mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .mobile-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Dropdown Panel directly below Navbar */
+  .mobile-dropdown {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 20px 5%;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.8);
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .mobile-dropdown.show {
+    display: flex;
+  }
+
+  .mobile-nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-link:hover, .mobile-nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+  }
+
+  .mobile-login-btn {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .desktop-nav, .desktop-only-btn {
+      display: none !important;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar" id="navbar">
+  <div class="nav-container">
+    
+    <!-- Left: Logo Slot -->
+    <a href="./index.html" class="logo-link">
+      <img src="./logo.webp" alt="Stackly Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('navFallbackText').style.display='block';" />
+      <span id="navFallbackText" style="display:none; color:#ffffff; font-weight:800; font-size:1.3rem;">💙 STACKLY</span>
+    </a>
+
+    <!-- Center: Desktop Menu -->
+    <nav class="nav-menu desktop-nav" id="desktopNav">
+      <a href="./index.html" class="nav-link ">Home</a>
+      <a href="./about.html" class="nav-link">About Us</a>
+      <a href="./our serves.html" class="nav-link">Our Services</a>
+      <a href="./doctors.html" class="nav-link">Find a Doctor</a>
+      <a href="./appointments.html" class="nav-link active">Appointments</a>
+      <a href="./contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Right: Desktop Login Button & Mobile Hamburger Toggle -->
+    <div class="nav-actions">
+      <button class="login-btn desktop-only-btn" id="loginBtn">Login</button>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile Dropdown Menu (Appears Directly Below Navbar Header) -->
+  <div class="mobile-dropdown" id="mobileDropdown">
+    <a href="./index.html" class="mobile-nav-link ">Home</a>
+    <a href="./about.html" class="mobile-nav-link">About Us</a>
+    <a href="./our serves.html" class="mobile-nav-link">Our Services</a>
+    <a href="./doctors.html" class="mobile-nav-link">Find a Doctor</a>
+    <a href="./appointments.html" class="mobile-nav-link active">Appointments</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+    <button class="login-btn mobile-login-btn" id="mobileDropdownLoginBtn">Login</button>
+  </div>
+</header>
+
+<script>
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDropdown = document.getElementById('mobileDropdown');
+  const loginBtn = document.getElementById('loginBtn');
+  const mobileDropdownLoginBtn = document.getElementById('mobileDropdownLoginBtn');
+
+  // Toggle mobile dropdown menu directly below navbar
+  mobileToggle.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mobileDropdown.classList.toggle('show');
+  });
+
+  // Redirect Login actions directly to login.html page
+  function handleLoginRedirect() {
+    window.location.href = 'login.html';
+  }
+
+  loginBtn.addEventListener('click', handleLoginRedirect);
+  mobileDropdownLoginBtn.addEventListener('click', handleLoginRedirect);
+</script>
+
+<style>
+  /* ================= APPOINTMENT PAGE: FORM-FREE HERO SECTION ================= */
+  .hero-showcase-section {
+    position: relative;
+    padding: 110px 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Soft Background Glow */
+  .hero-showcase-section::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 350px;
+    height: 350px;
+    background: rgba(2, 132, 199, 0.25);
+    filter: blur(90px);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-showcase-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Left Column: Copy & CTAs */
+  .hero-showcase-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-showcase-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    width: fit-content;
+  }
+
+  .hero-showcase-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .hero-showcase-title span {
+    color: #38bdf8;
+  }
+
+  .hero-showcase-desc {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 35px;
+  }
+
+  /* Button Group */
+  .hero-showcase-btns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 45px;
+  }
+
+  .btn-showcase-primary {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-showcase-primary:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+  }
+
+  .btn-showcase-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-showcase-secondary:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Quick Metrics Bar */
+  .hero-metrics-bar {
+    display: flex;
+    gap: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .metric-label {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+
+  /* Right Column: Visual Feature Card */
+  .hero-visual-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    position: relative;
+  }
+
+  .visual-card-banner {
+    width: 100%;
+    height: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .visual-card-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .visual-floating-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .visual-card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .visual-doc-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+
+  .visual-doc-specialty {
+    font-size: 0.85rem;
+    color: #38bdf8;
+    font-weight: 700;
+  }
+
+  .visual-status-pill {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .hero-showcase-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .hero-showcase-content {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .hero-showcase-section {
+      padding: 70px 0;
+    }
+
+    .hero-showcase-title {
+      font-size: 2.3rem;
+    }
+
+    .hero-showcase-btns {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn-showcase-primary,
+    .btn-showcase-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hero-metrics-bar {
+      gap: 15px;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: FORM-FREE HERO SECTION -->
+<br>
+<br><section class="hero-showcase-section" id="hero-showcase">
+  <div class="hero-showcase-container">
+    
+    <!-- Left Column: Copy & Action Buttons -->
+    <div class="hero-showcase-content">
+      <div class="hero-showcase-pill">
+        ✨ Premium Healthcare Experience
+      </div>
+
+      <h1 class="hero-showcase-title">
+        Your Health Journey, <span>Simplified & Secured</span>.
+      </h1>
+
+      <p class="hero-showcase-desc">
+        Connect instantly with top-rated medical experts. Experience zero-wait virtual consultations and seamless clinic appointment management tailored for your lifestyle.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-showcase-btns">
+        <a href="404.html" class="btn-showcase-primary" id="showcaseBookBtn">
+          Book Consultation &rarr;
+        </a>
+        <a href="404.html" class="btn-showcase-secondary" id="showcaseExploreBtn">
+          Explore Specialists
+        </a>
+      </div>
+
+      <!-- Metrics Bar -->
+      <div class="hero-metrics-bar">
+        <div class="metric-item">
+          <span class="metric-number">1,200+</span>
+          <span class="metric-label">Verified Doctors</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">98%</span>
+          <span class="metric-label">Satisfied Patients</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-number">24/7</span>
+          <span class="metric-label">Instant Support</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Visual Preview Card -->
+    <div class="hero-visual-card">
+      <div class="visual-card-banner">
+        <img src="./abouts.webp" alt="Doctor Consultation" />
+        <div class="visual-floating-badge">
+          <span>🟢</span> Live Slots Open Today
+        </div>
+      </div>
+
+      <div class="visual-card-info">
+        <div>
+          <h3 class="visual-doc-name">Dr. Priya Sharma</h3>
+          <span class="visual-doc-specialty">Senior Cardiologist</span>
+        </div>
+        <span class="visual-status-pill">Available Now</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('showcaseBookBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('showcaseExploreBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: HOW IT WORKS SECTION ================= */
+  .appt-steps-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-steps-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-steps-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-steps-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-steps-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-steps-title span {
+    color: #0284c7;
+  }
+
+  .appt-steps-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 3 Columns Grid */
+  .appt-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .appt-step-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .appt-step-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  /* Step Number Badge */
+  .appt-step-number {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    transition: color 0.3s ease;
+  }
+
+  .appt-step-card:hover .appt-step-number {
+    color: #bae6fd;
+  }
+
+  .appt-step-icon-box {
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    transition: all 0.35s ease;
+  }
+
+  .appt-step-card:hover .appt-step-icon-box {
+    background: #0284c7;
+    color: #ffffff;
+    transform: scale(1.08) rotate(5deg);
+  }
+
+  .appt-step-card-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 12px;
+  }
+
+  .appt-step-card-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.65;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-steps-section {
+      padding: 70px 0;
+    }
+
+    .appt-steps-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: HOW IT WORKS SECTION -->
+<section class="appt-steps-section" id="appt-how-it-works">
+  <div class="appt-steps-container">
+    
+    <!-- Section Header -->
+    <div class="appt-steps-header">
+      <span class="appt-steps-tag">Simple & Streamlined</span>
+      <h2 class="appt-steps-title">How Booking Works in <span>3 Easy Steps</span></h2>
+      <p class="appt-steps-subtitle">Get connected with top medical specialists in minutes without any complicated paperwork.</p>
+    </div>
+
+    <!-- 3 Columns Grid -->
+    <div class="appt-steps-grid">
+      
+      <!-- Step 1 -->
+      <div class="appt-step-card">
+        <span class="appt-step-number">01</span>
+        <div class="appt-step-icon-box">🔍</div>
+        <h3 class="appt-step-card-title">Choose Specialist</h3>
+        <p class="appt-step-card-desc">Browse through our directory of verified medical experts by specialty, experience, or patient reviews.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="appt-step-card">
+        <span class="appt-step-number">02</span>
+        <div class="appt-step-icon-box">📅</div>
+        <h3 class="appt-step-card-title">Select Date & Time</h3>
+        <p class="appt-step-card-desc">Pick an open slot that fits your schedule, choosing between secure video calls or in-clinic visits.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="appt-step-card">
+        <span class="appt-step-number">03</span>
+        <div class="appt-step-icon-box">✅</div>
+        <h3 class="appt-step-card-title">Confirm & Consult</h3>
+        <p class="appt-step-card-desc">Receive instant confirmation, secure video links, and digital prescriptions directly in your account.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= APPOINTMENT PAGE: SELECT SPECIALTY SECTION ================= */
+  .appt-specialties-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-specialties-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-specialties-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-specialties-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-specialties-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-specialties-title span {
+    color: #0284c7;
+  }
+
+  .appt-specialties-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 4 Columns Specialty Grid */
+  .appt-specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .appt-spec-card {
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 32px 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .appt-spec-card:hover {
+    transform: translateY(-8px);
+    background: #ffffff;
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  .appt-spec-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    transition: all 0.35s ease;
+  }
+
+  .appt-spec-card:hover .appt-spec-icon-box {
+    background: #0284c7;
+    color: #ffffff;
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .appt-spec-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+  }
+
+  .appt-spec-card:hover .appt-spec-name {
+    color: #0284c7;
+  }
+
+  .appt-spec-count {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .appt-spec-action {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .appt-spec-card:hover .appt-spec-action {
+    transform: translateX(4px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1024px) {
+    .appt-specialties-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-specialties-section {
+      padding: 70px 0;
+    }
+
+    .appt-specialties-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-specialties-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: SELECT SPECIALTY SECTION -->
+<section class="appt-specialties-section" id="appt-specialties">
+  <div class="appt-specialties-container">
+    
+    <!-- Section Header -->
+    <div class="appt-specialties-header">
+      <span class="appt-specialties-tag">Targeted Care</span>
+      <h2 class="appt-specialties-title">Select Your Required <span>Specialty</span></h2>
+      <p class="appt-specialties-subtitle">Choose a medical department to view available specialists and instantly book your time slot.</p>
+    </div>
+
+    <!-- 4 Columns Grid -->
+    <div class="appt-specialties-grid">
+      
+      <!-- Card 1 -->
+      <a href="404.html" class="appt-spec-card">
+        <div class="appt-spec-icon-box">❤️</div>
+        <h3 class="appt-spec-name">Cardiology</h3>
+        <span class="appt-spec-count">45+ Doctors Ready</span>
+        <span class="appt-spec-action">Book Slot &rarr;</span>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="404.html" class="appt-spec-card">
+        <div class="appt-spec-icon-box">🧠</div>
+        <h3 class="appt-spec-name">Neurology</h3>
+        <span class="appt-spec-count">30+ Doctors Ready</span>
+        <span class="appt-spec-action">Book Slot &rarr;</span>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="404.html" class="appt-spec-card">
+        <div class="appt-spec-icon-box">👶</div>
+        <h3 class="appt-spec-name">Pediatrics</h3>
+        <span class="appt-spec-count">55+ Doctors Ready</span>
+        <span class="appt-spec-action">Book Slot &rarr;</span>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="404.html" class="appt-spec-card">
+        <div class="appt-spec-icon-box">🦴</div>
+        <h3 class="appt-spec-name">Orthopedics</h3>
+        <span class="appt-spec-count">40+ Doctors Ready</span>
+        <span class="appt-spec-action">Book Slot &rarr;</span>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= APPOINTMENT PAGE: CONSULTATION TYPE SECTION ================= */
+  .appt-types-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-types-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-types-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-types-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-types-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-types-title span {
+    color: #0284c7;
+  }
+
+  .appt-types-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 2 Columns Grid */
+  .appt-types-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .appt-type-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 36px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .appt-type-card.featured {
+    border-color: #0284c7;
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.15);
+  }
+
+  .appt-type-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.2);
+    border-color: #38bdf8;
+  }
+
+  .appt-type-icon-box {
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    transition: all 0.35s ease;
+  }
+
+  .appt-type-card:hover .appt-type-icon-box {
+    background: #0284c7;
+    color: #ffffff;
+    transform: scale(1.08) rotate(5deg);
+  }
+
+  .appt-type-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .appt-type-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.65;
+    margin-bottom: 25px;
+  }
+
+  .appt-type-features {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 35px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 25px;
+  }
+
+  .appt-type-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .appt-type-check {
+    color: #0284c7;
+    font-weight: 800;
+  }
+
+  .btn-appt-type {
+    background: #f8fafc;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .appt-type-card.featured .btn-appt-type,
+  .appt-type-card:hover .btn-appt-type {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 8px 22px rgba(2, 132, 199, 0.35);
+  }
+
+  .btn-appt-type:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 768px) {
+    .appt-types-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .appt-types-section {
+      padding: 70px 0;
+    }
+
+    .appt-types-title {
+      font-size: 2.1rem;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: CONSULTATION TYPE SECTION -->
+<section class="appt-types-section" id="appt-consultation-types">
+  <div class="appt-types-container">
+    
+    <!-- Section Header -->
+    <div class="appt-types-header">
+      <span class="appt-types-tag">Flexible Options</span>
+      <h2 class="appt-types-title">Choose Your Preferred <span>Consultation Mode</span></h2>
+      <p class="appt-types-subtitle">Select between convenient online video consultations or traditional in-clinic appointments.</p>
+    </div>
+
+    <!-- 2 Columns Grid -->
+    <div class="appt-types-grid">
+      
+      <!-- Card 1: Video Consultation -->
+      <div class="appt-type-card featured">
+        <div class="appt-type-icon-box">💻</div>
+        <h3 class="appt-type-name">Video Consultation</h3>
+        <p class="appt-type-desc">Connect with certified specialists from the comfort of your home via secure, high-definition video calls.</p>
+        
+        <div class="appt-type-features">
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> Zero travel or waiting room time
+          </div>
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> Instant digital prescription delivery
+          </div>
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> Ideal for follow-ups & general advice
+          </div>
+        </div>
+
+        <a href="404.html" class="btn-appt-type" id="videoConsultBtn">
+          Book Video Visit &rarr;
+        </a>
+      </div>
+
+      <!-- Card 2: In-Clinic Visit -->
+      <div class="appt-type-card">
+        <div class="appt-type-icon-box">🏥</div>
+        <h3 class="appt-type-name">In-Clinic Visit</h3>
+        <p class="appt-type-desc">Schedule a face-to-face consultation at our fully equipped modern partner clinics and hospitals.</p>
+        
+        <div class="appt-type-features">
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> Comprehensive physical examination
+          </div>
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> On-site lab tests & diagnostics available
+          </div>
+          <div class="appt-type-feature-item">
+            <span class="appt-type-check">✓</span> Direct face-to-face specialist interaction
+          </div>
+        </div>
+
+        <a href="404.html" class="btn-appt-type" id="clinicVisitBtn">
+          Book Clinic Visit &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('videoConsultBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('clinicVisitBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: TESTIMONIALS SECTION ================= */
+  .appt-testimonials-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-testimonials-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-testimonials-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-testimonials-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-testimonials-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-testimonials-title span {
+    color: #0284c7;
+  }
+
+  .appt-testimonials-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 3 Columns Grid */
+  .appt-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .appt-testimonial-card {
+    background: #f8fafc;
+    border-radius: 24px;
+    padding: 36px 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .appt-testimonial-card:hover {
+    transform: translateY(-8px);
+    background: #ffffff;
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  /* Star Rating */
+  .appt-testi-stars {
+    color: #f59e0b;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+
+  .appt-testi-text {
+    font-size: 0.96rem;
+    color: #334155;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  /* Author Info */
+  .appt-testi-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 20px;
+  }
+
+  .appt-testi-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #0284c7;
+  }
+
+  .appt-testi-info h4 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 2px;
+  }
+
+  .appt-testi-info span {
+    font-size: 0.82rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-testimonials-section {
+      padding: 70px 0;
+    }
+
+    .appt-testimonials-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: TESTIMONIALS SECTION -->
+<section class="appt-testimonials-section" id="appt-testimonials">
+  <div class="appt-testimonials-container">
+    
+    <!-- Section Header -->
+    <div class="appt-testimonials-header">
+      <span class="appt-testimonials-tag">Patient Success Stories</span>
+      <h2 class="appt-testimonials-title">Trusted by Thousands of <span>Happy Patients</span></h2>
+      <p class="appt-testimonials-subtitle">Read how our platform has helped patients connect with top specialists and receive timely care.</p>
+    </div>
+
+    <!-- 3 Columns Grid -->
+    <div class="appt-testimonials-grid">
+      
+      <!-- Card 1 -->
+      <div class="appt-testimonial-card">
+        <div>
+          <div class="appt-testi-stars">★★★★★</div>
+          <p class="appt-testi-text">"Booking a video consultation took less than two minutes. Dr. Rajesh was thorough, patient, and the digital prescription arrived instantly. Highly recommend!"</p>
+        </div>
+        <div class="appt-testi-author">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Patient" class="appt-testi-avatar" />
+          <div class="appt-testi-info">
+            <h4>Ananya Suresh</h4>
+            <span>Cardiology Patient</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="appt-testimonial-card">
+        <div>
+          <div class="appt-testi-stars">★★★★★</div>
+          <p class="appt-testi-text">"I needed an urgent pediatric appointment for my son. The real-time slot tracking let me secure a visit within an hour. Excellent service and interface."</p>
+        </div>
+        <div class="appt-testi-author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Patient" class="appt-testi-avatar" />
+          <div class="appt-testi-info">
+            <h4>Karthik Rao</h4>
+            <span>Parent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="appt-testimonial-card">
+        <div>
+          <div class="appt-testi-stars">★★★★★</div>
+          <p class="appt-testi-text">"Clean design, zero waiting queues, and verified specialists. Stackly has completely transformed how my family handles routine checkups and expert visits."</p>
+        </div>
+        <div class="appt-testi-author">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Patient" class="appt-testi-avatar" />
+          <div class="appt-testi-info">
+            <h4>Priya Menon</h4>
+            <span>Regular User</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= APPOINTMENT PAGE: INSURANCE & PARTNERS SECTION ================= */
+  .appt-partners-section {
+    padding: 100px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .appt-partners-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-partners-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+  }
+
+  .appt-partners-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-partners-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-partners-title span {
+    color: #0284c7;
+  }
+
+  .appt-partners-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Partners Grid */
+  .appt-partners-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .appt-partner-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .appt-partner-card:hover {
+    background: #ffffff;
+    border-color: #0284c7;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(2, 132, 199, 0.1);
+  }
+
+  .appt-partner-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .appt-partner-name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+    transition: color 0.3s ease;
+  }
+
+  .appt-partner-card:hover .appt-partner-name {
+    color: #0284c7;
+  }
+
+  .appt-partner-desc {
+    font-size: 0.82rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-partners-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .appt-partners-section {
+      padding: 70px 0;
+    }
+
+    .appt-partners-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-partners-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: INSURANCE & PARTNERS SECTION -->
+<section class="appt-partners-section" id="appt-partners">
+  <div class="appt-partners-container">
+    
+    <!-- Section Header -->
+    <div class="appt-partners-header">
+      <span class="appt-partners-tag">Cashless & Secure</span>
+      <h2 class="appt-partners-title">Accepted Insurance & <span>Payment Partners</span></h2>
+      <p class="appt-partners-subtitle">We collaborate with leading healthcare insurance providers and secure gateways for hassle-free claims.</p>
+    </div>
+
+    <!-- Partners Grid -->
+    <div class="appt-partners-grid">
+      
+      <!-- Partner 1 -->
+      <a href="404.html" class="appt-partner-card">
+        <span class="appt-partner-icon">🛡️</span>
+        <h3 class="appt-partner-name">CareShield Health</h3>
+        <span class="appt-partner-desc">Cashless Direct Claim</span>
+      </a>
+
+      <!-- Partner 2 -->
+      <a href="404.html" class="appt-partner-card">
+        <span class="appt-partner-icon">🏥</span>
+        <h3 class="appt-partner-name">PrimeCare Global</h3>
+        <span class="appt-partner-desc">Global Coverage Network</span>
+      </a>
+
+      <!-- Partner 3 -->
+      <a href="404.html" class="appt-partner-card">
+        <span class="appt-partner-icon">💳</span>
+        <h3 class="appt-partner-name">SecurePay Gateway</h3>
+        <span class="appt-partner-desc">256-Bit Encrypted Payments</span>
+      </a>
+
+      <!-- Partner 4 -->
+      <a href="404.html" class="appt-partner-card">
+        <span class="appt-partner-icon">⚡</span>
+        <h3 class="appt-partner-name">MediInsure Direct</h3>
+        <span class="appt-partner-desc">Instant Verification</span>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= APPOINTMENT PAGE: EXPERTS IMAGE SHOWCASE SECTION ================= */
+  .appt-experts-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-experts-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-experts-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-experts-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-experts-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-experts-title span {
+    color: #0284c7;
+  }
+
+  .appt-experts-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 3 Columns Grid */
+  .appt-experts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .appt-expert-card {
+    background: #f8fafc;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .appt-expert-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+    background: #ffffff;
+  }
+
+  /* Image Wrapper */
+  .appt-expert-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+  }
+
+  .appt-expert-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .appt-expert-card:hover .appt-expert-img-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .appt-expert-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  /* Content Body */
+  .appt-expert-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .appt-expert-spec {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .appt-expert-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .appt-expert-details {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .btn-expert-book {
+    background: #f1f5f9;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appt-expert-card:hover .btn-expert-book {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+  }
+
+  .btn-expert-book:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-experts-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-experts-section {
+      padding: 70px 0;
+    }
+
+    .appt-experts-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-experts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: EXPERTS IMAGE SHOWCASE SECTION -->
+<section class="appt-experts-section" id="appt-experts-showcase">
+  <div class="appt-experts-container">
+    
+    <!-- Section Header -->
+    <div class="appt-experts-header">
+      <span class="appt-experts-tag">World-Class Specialists</span>
+      <h2 class="appt-experts-title">Meet Our Leading Medical <span>Experts</span></h2>
+      <p class="appt-experts-subtitle">Consult with highly experienced board-certified specialists dedicated to your health and well-being.</p>
+    </div>
+
+    <!-- 3 Columns Grid -->
+    <div class="appt-experts-grid">
+      
+      <!-- Expert 1 -->
+      <div class="appt-expert-card">
+        <div class="appt-expert-img-wrapper">
+          <img src="./doc4.webp" alt="Dr. Priya Sharma" />
+          <span class="appt-expert-status">🟢 Available Today</span>
+        </div>
+        <div class="appt-expert-body">
+          <span class="appt-expert-spec">Senior Cardiologist</span>
+          <h3 class="appt-expert-name">Dr. Priya Sharma, MD</h3>
+          <p class="appt-expert-details">15+ years of experience in advanced cardiac care, preventive cardiology, and non-invasive diagnostics.</p>
+          <a href="404.html" class="btn-expert-book" id="expertBook1">
+            Book Consultation &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Expert 2 -->
+      <div class="appt-expert-card">
+        <div class="appt-expert-img-wrapper">
+          <img src="./doc1.webp" alt="Dr. Rajesh Kumar" />
+          <span class="appt-expert-status">🟢 Available Today</span>
+        </div>
+        <div class="appt-expert-body">
+          <span class="appt-expert-spec">Chief Neurologist</span>
+          <h3 class="appt-expert-name">Dr. Rajesh Kumar, DM</h3>
+          <p class="appt-expert-details">Specializing in neurological disorders, stroke management, and chronic migraine therapies.</p>
+          <a href="404.html" class="btn-expert-book" id="expertBook2">
+            Book Consultation &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Expert 3 -->
+      <div class="appt-expert-card">
+        <div class="appt-expert-img-wrapper">
+          <img src="./doc2.webp" alt="Dr. Ananya Iyer" />
+          <span class="appt-expert-status">🟢 Available Today</span>
+        </div>
+        <div class="appt-expert-body">
+          <span class="appt-expert-spec">Lead Pediatrician</span>
+          <h3 class="appt-expert-name">Dr. Ananya Iyer, DCH</h3>
+          <p class="appt-expert-details">Dedicated to child health, neonatal care, developmental milestones, and pediatric immunizations.</p>
+          <a href="404.html" class="btn-expert-book" id="expertBook3">
+            Book Consultation &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('expertBook1').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('expertBook2').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('expertBook3').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: LIVE AVAILABILITY SECTION ================= */
+  .appt-live-availability-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-live-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-live-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 60px auto;
+  }
+
+  .appt-live-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-live-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-live-title span {
+    color: #0284c7;
+  }
+
+  .appt-live-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* 3 Columns Grid */
+  .appt-live-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .appt-live-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 36px 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .appt-live-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  .appt-live-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .appt-live-badge {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .appt-live-badge.limited {
+    background: rgba(234, 179, 8, 0.15);
+    color: #ca8a04;
+    border-color: rgba(234, 179, 8, 0.3);
+  }
+
+  .appt-live-dept {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .appt-live-name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 16px;
+  }
+
+  .appt-live-slots-info {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #f1f5f9;
+  }
+
+  .appt-slot-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #334155;
+    font-weight: 700;
+  }
+
+  .appt-slot-row span:last-child {
+    color: #0284c7;
+  }
+
+  .btn-live-book {
+    background: #f1f5f9;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appt-live-card:hover .btn-live-book {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+  }
+
+  .btn-live-book:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-live-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-live-availability-section {
+      padding: 70px 0;
+    }
+
+    .appt-live-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-live-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: LIVE AVAILABILITY SECTION -->
+<section class="appt-live-availability-section" id="appt-live-availability">
+  <div class="appt-live-container">
+    
+    <!-- Section Header -->
+    <div class="appt-live-header">
+      <span class="appt-live-tag">Live Slot Tracking</span>
+      <h2 class="appt-live-title">Real-Time Appointment <span>Availability</span></h2>
+      <p class="appt-live-subtitle">Check current open slots across our leading departments and secure your consultation instantly.</p>
+    </div>
+
+    <!-- 3 Columns Grid -->
+    <div class="appt-live-grid">
+      
+      <!-- Card 1 -->
+      <div class="appt-live-card">
+        <div>
+          <div class="appt-live-card-top">
+            <span class="appt-live-dept">Cardiology</span>
+            <span class="appt-live-badge">8 Slots Open Today</span>
+          </div>
+          <h3 class="appt-live-name">Cardiac Consultation</h3>
+          <div class="appt-live-slots-info">
+            <div class="appt-slot-row">
+              <span>Morning Session:</span>
+              <span>3 Slots Left</span>
+            </div>
+            <div class="appt-slot-row">
+              <span>Evening Session:</span>
+              <span>5 Slots Left</span>
+            </div>
+          </div>
+        </div>
+        <a href="404.html" class="btn-live-book" id="liveSlotBtn1">
+          Lock In Slot &rarr;
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="appt-live-card">
+        <div>
+          <div class="appt-live-card-top">
+            <span class="appt-live-dept">Neurology</span>
+            <span class="appt-live-badge limited">4 Slots Open Today</span>
+          </div>
+          <h3 class="appt-live-name">Neurological Evaluation</h3>
+          <div class="appt-live-slots-info">
+            <div class="appt-slot-row">
+              <span>Morning Session:</span>
+              <span>1 Slot Left</span>
+            </div>
+            <div class="appt-slot-row">
+              <span>Evening Session:</span>
+              <span>3 Slots Left</span>
+            </div>
+          </div>
+        </div>
+        <a href="404.html" class="btn-live-book" id="liveSlotBtn2">
+          Lock In Slot &rarr;
+        </a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="appt-live-card">
+        <div>
+          <div class="appt-live-card-top">
+            <span class="appt-live-dept">Pediatrics</span>
+            <span class="appt-live-badge">12 Slots Open Today</span>
+          </div>
+          <h3 class="appt-live-name">Child Care & Checkup</h3>
+          <div class="appt-live-slots-info">
+            <div class="appt-slot-row">
+              <span>Morning Session:</span>
+              <span>6 Slots Left</span>
+            </div>
+            <div class="appt-slot-row">
+              <span>Evening Session:</span>
+              <span>6 Slots Left</span>
+            </div>
+          </div>
+        </div>
+        <a href="404.html" class="btn-live-book" id="liveSlotBtn3">
+          Lock In Slot &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('liveSlotBtn1').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('liveSlotBtn2').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('liveSlotBtn3').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: DEPARTMENT FILTER SECTION ================= */
+  .appt-filter-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .appt-filter-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-filter-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 40px auto;
+  }
+
+  .appt-filter-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-filter-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-filter-title span {
+    color: #0284c7;
+  }
+
+  .appt-filter-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Filter Tab Buttons */
+  .appt-filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+
+  .appt-tab-btn {
+    background: #f8fafc;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .appt-tab-btn:hover,
+  .appt-tab-btn.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+  }
+
+  /* Filter Cards Grid */
+  .appt-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .appt-filter-card {
+    background: #f8fafc;
+    border-radius: 24px;
+    padding: 36px 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .appt-filter-card:hover {
+    transform: translateY(-8px);
+    background: #ffffff;
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.18);
+    border-color: #38bdf8;
+  }
+
+  .appt-filter-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .appt-filter-card h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .appt-filter-card p {
+    font-size: 0.94rem;
+    color: #64748b;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .btn-filter-action {
+    background: #ffffff;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .appt-filter-card:hover .btn-filter-action {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+  }
+
+  .btn-filter-action:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-filter-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .appt-filter-section {
+      padding: 70px 0;
+    }
+
+    .appt-filter-title {
+      font-size: 2.1rem;
+    }
+
+    .appt-filter-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: DEPARTMENT FILTER SECTION -->
+<section class="appt-filter-section" id="appt-department-filter">
+  <div class="appt-filter-container">
+    
+    <!-- Section Header -->
+    <div class="appt-filter-header">
+      <span class="appt-filter-tag">Customized Care Path</span>
+      <h2 class="appt-filter-title">Find Care by <span>Medical Domain</span></h2>
+      <p class="appt-filter-subtitle">Filter through specialized departments to quickly match with the right expert consultant.</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="appt-filter-tabs">
+      <button type="button" class="appt-tab-btn active">All Departments</button>
+      <button type="button" class="appt-tab-btn">Internal Medicine</button>
+      <button type="button" class="appt-tab-btn">Surgical Care</button>
+      <button type="button" class="appt-tab-btn">Diagnostics</button>
+    </div>
+
+    <!-- Filter Grid -->
+    <div class="appt-filter-grid">
+      
+      <!-- Card 1 -->
+      <div class="appt-filter-card">
+        <div>
+          <div class="appt-filter-card-icon">🫀</div>
+          <h3>Advanced Cardiology</h3>
+          <p>Comprehensive cardiac evaluations, ECG diagnostics, and chronic heart condition management by leading specialists.</p>
+        </div>
+        <a href="404.html" class="btn-filter-action" id="filterCardBtn1">
+          Explore Cardiology &rarr;
+        </a>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="appt-filter-card">
+        <div>
+          <div class="appt-filter-card-icon">🧠</div>
+          <h3>Neurology & Stroke Care</h3>
+          <p>Expert consultations for neurological disorders, memory evaluations, migraines, and nerve-related conditions.</p>
+        </div>
+        <a href="404.html" class="btn-filter-action" id="filterCardBtn2">
+          Explore Neurology &rarr;
+        </a>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="appt-filter-card">
+        <div>
+          <div class="appt-filter-card-icon">🧸</div>
+          <h3>Pediatrics & Neonatal</h3>
+          <p>Gentle, specialized care for infants, children, and adolescents focusing on growth milestones and vaccinations.</p>
+        </div>
+        <a href="404.html" class="btn-filter-action" id="filterCardBtn3">
+          Explore Pediatrics &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Tab switching effect simulation
+  document.querySelectorAll('.appt-tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.appt-tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  document.getElementById('filterCardBtn1').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('filterCardBtn2').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('filterCardBtn3').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: FEE CALCULATOR SECTION ================= */
+  .appt-calc-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .appt-calc-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Section Header */
+  .appt-calc-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+  }
+
+  .appt-calc-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .appt-calc-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .appt-calc-title span {
+    color: #0284c7;
+  }
+
+  .appt-calc-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Calculator Wrapper Card */
+  .appt-calc-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 45px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .appt-calc-options {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .appt-calc-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .appt-calc-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .appt-calc-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .appt-chip {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .appt-chip:hover {
+    border-color: #0284c7;
+    color: #0284c7;
+  }
+
+  .appt-chip.active {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  }
+
+  /* Summary Box */
+  .appt-calc-summary {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 20px;
+    padding: 35px 30px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2);
+  }
+
+  .appt-summary-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 12px;
+  }
+
+  .appt-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #cbd5e1;
+  }
+
+  .appt-summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 15px;
+  }
+
+  .appt-summary-total span:last-child {
+    color: #38bdf8;
+    font-size: 1.6rem;
+  }
+
+  .btn-calc-book {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.4);
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn-calc-book:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 768px) {
+    .appt-calc-card {
+      grid-template-columns: 1fr;
+      padding: 30px 20px;
+      gap: 30px;
+    }
+
+    .appt-calc-section {
+      padding: 70px 0;
+    }
+
+    .appt-calc-title {
+      font-size: 2.1rem;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: FEE CALCULATOR SECTION -->
+<section class="appt-calc-section" id="appt-fee-calculator">
+  <div class="appt-calc-container">
+    
+    <!-- Section Header -->
+    <div class="appt-calc-header">
+      <span class="appt-calc-tag">Transparent Pricing</span>
+      <h2 class="appt-calc-title">Consultation Fee <span>Calculator</span></h2>
+      <p class="appt-calc-subtitle">Customize your session parameters to get an instant transparent estimate before booking.</p>
+    </div>
+
+    <!-- Calculator Card -->
+    <div class="appt-calc-card">
+      
+      <!-- Left Options -->
+      <div class="appt-calc-options">
+        
+        <!-- Mode Selection -->
+        <div class="appt-calc-group">
+          <span class="appt-calc-label">Consultation Mode</span>
+          <div class="appt-calc-chips" id="modeChips">
+            <button type="button" class="appt-chip active" data-price="49" data-name="Video Call">Video Call ($49)</button>
+            <button type="button" class="appt-chip" data-price="89" data-name="In-Clinic Visit">In-Clinic ($89)</button>
+          </div>
+        </div>
+
+        <!-- Tier Selection -->
+        <div class="appt-calc-group">
+          <span class="appt-calc-label">Specialist Tier</span>
+          <div class="appt-calc-chips" id="tierChips">
+            <button type="button" class="appt-chip active" data-add="0" data-name="Standard Specialist">Standard</button>
+            <button type="button" class="appt-chip" data-add="40" data-name="Senior Consultant">Senior Expert (+$40)</button>
+          </div>
+        </div>
+
+        <!-- Add-on Selection -->
+        <div class="appt-calc-group">
+          <span class="appt-calc-label">Optional Add-on</span>
+          <div class="appt-calc-chips" id="addonChips">
+            <button type="button" class="appt-chip active" data-add="0" data-name="None">None</button>
+            <button type="button" class="appt-chip" data-add="25" data-name="Digital Lab Report Review">Lab Review (+$25)</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Summary Box -->
+      <div class="appt-calc-summary">
+        <div>
+          <div class="appt-summary-title">Estimation Summary</div>
+          <div class="appt-summary-row">
+            <span id="summaryMode">Mode: Video Call</span>
+            <span id="summaryModePrice">$49</span>
+          </div>
+          <div class="appt-summary-row">
+            <span id="summaryTier">Tier: Standard</span>
+            <span id="summaryTierPrice">+$0</span>
+          </div>
+          <div class="appt-summary-row">
+            <span id="summaryAddon">Add-on: None</span>
+            <span id="summaryAddonPrice">+$0</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="appt-summary-total">
+            <span>Total Fee:</span>
+            <span id="summaryTotal">$49</span>
+          </div>
+          <a href="404.html" class="btn-calc-book" id="calcBookBtn">
+            Book with this Plan &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Simple interactive price calculation logic
+  const modeChips = document.querySelectorAll('#modeChips .appt-chip');
+  const tierChips = document.querySelectorAll('#tierChips .appt-chip');
+  const addonChips = document.querySelectorAll('#addonChips .appt-chip');
+
+  let basePrice = 49;
+  let tierPrice = 0;
+  let addonPrice = 0;
+
+  function updateSummary() {
+    const total = basePrice + tierPrice + addonPrice;
+    document.getElementById('summaryTotal').textContent = '$' + total;
+  }
+
+  modeChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      modeChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      basePrice = parseInt(this.getAttribute('data-price'));
+      document.getElementById('summaryMode').textContent = 'Mode: ' + this.getAttribute('data-name');
+      document.getElementById('summaryModePrice').textContent = '$' + basePrice;
+      updateSummary();
+    });
+  });
+
+  tierChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      tierChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      tierPrice = parseInt(this.getAttribute('data-add'));
+      document.getElementById('summaryTier').textContent = 'Tier: ' + (tierPrice === 0 ? 'Standard' : 'Senior Expert');
+      document.getElementById('summaryTierPrice').textContent = '+$' + tierPrice;
+      updateSummary();
+    });
+  });
+
+  addonChips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      addonChips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      addonPrice = parseInt(this.getAttribute('data-add'));
+      document.getElementById('summaryAddon').textContent = 'Add-on: ' + this.getAttribute('data-name');
+      document.getElementById('summaryAddonPrice').textContent = '+$' + addonPrice;
+      updateSummary();
+    });
+  });
+
+  document.getElementById('calcBookBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: MISSION BACKGROUND SHOWCASE ================= */
+  .appt-mission-section {
+    padding: 130px 0;
+    position: relative;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 132, 199, 0.85) 100%),
+                url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    box-sizing: border-box;
+  }
+
+  .appt-mission-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .appt-mission-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.15);
+    padding: 6px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .appt-mission-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+
+  .appt-mission-title span {
+    color: #38bdf8;
+  }
+
+  .appt-mission-desc {
+    font-size: 1.1rem;
+    color: #e2e8f0;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-mission-action {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-mission-action:hover {
+    background: #38bdf8;
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.5);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 768px) {
+    .appt-mission-section {
+      padding: 90px 0;
+    }
+
+    .appt-mission-title {
+      font-size: 2.2rem;
+    }
+
+    .appt-mission-desc {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: MISSION BACKGROUND SHOWCASE SECTION -->
+<section class="appt-mission-section" id="appt-mission">
+  <div class="appt-mission-container">
+    
+    <span class="appt-mission-tag">Our Core Commitment</span>
+
+    <h2 class="appt-mission-title">
+      Redefining Healthcare Access with <span>Empathy & Excellence</span>
+    </h2>
+
+    <p class="appt-mission-desc">
+      We believe that quality medical guidance shouldn't be bound by geography, waiting lists, or administrative friction. By seamlessly bridging cutting-edge digital infrastructure with certified medical expertise, our platform empowers you to take absolute charge of your wellness journey at every single step.
+    </p>
+
+    <a href="404.html" class="btn-mission-action" id="missionActionBtn">
+      Learn More About Our Standards &rarr;
+    </a>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('missionActionBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= APPOINTMENT PAGE: EMERGENCY HOTLINE SECTION ================= */
+  .appt-emergency-section {
+    padding: 90px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .appt-emergency-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Emergency Banner Card */
+  .appt-emergency-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0284c7 100%);
+    border-radius: 30px;
+    padding: 50px 60px;
+    color: #ffffff;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  /* Decorative glow */
+  .appt-emergency-card::before {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    background: rgba(56, 189, 248, 0.2);
+    filter: blur(60px);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .appt-emergency-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .appt-emergency-tag {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .appt-emergency-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .appt-emergency-title span {
+    color: #38bdf8;
+  }
+
+  .appt-emergency-desc {
+    font-size: 1.02rem;
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Right Action Box */
+  .appt-emergency-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+    position: relative;
+    z-index: 2;
+  }
+
+  .btn-emergency-hotline {
+    background: #ef4444;
+    color: #ffffff;
+    padding: 16px 28px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-emergency-hotline:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(239, 68, 68, 0.55);
+  }
+
+  .btn-emergency-ambulance {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding: 16px 28px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-emergency-ambulance:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .appt-emergency-card {
+      grid-template-columns: 1fr;
+      padding: 40px 30px;
+      gap: 30px;
+    }
+
+    .appt-emergency-content {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .appt-emergency-section {
+      padding: 70px 0;
+    }
+
+    .appt-emergency-title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<!-- APPOINTMENT PAGE: EMERGENCY HOTLINE SECTION -->
+<section class="appt-emergency-section" id="appt-emergency">
+  <div class="appt-emergency-container">
+    
+    <div class="appt-emergency-card">
+      
+      <!-- Left Content -->
+      <div class="appt-emergency-content">
+        <span class="appt-emergency-tag">🚨 24/7 Priority Response</span>
+        <h2 class="appt-emergency-title">Facing a Medical <span>Emergency</span>?</h2>
+        <p class="appt-emergency-desc">
+          If you or a loved one requires immediate medical intervention or critical care triage, our emergency hotline team is available around the clock to coordinate rapid ambulance dispatch and specialist support.
+        </p>
+      </div>
+
+      <!-- Right Actions -->
+      <div class="appt-emergency-actions">
+        <a href="404.html" class="btn-emergency-hotline" id="emergencyCallBtn">
+          📞 Call Emergency Hotline
+        </a>
+        <a href="404.html" class="btn-emergency-ambulance" id="ambulanceDispatchBtn">
+          🚑 Request Ambulance Dispatch
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('emergencyCallBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('ambulanceDispatchBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  /* ================= FOOTER SECTION STYLING ================= */
+  .footer-section {
+    background-color: black;
+    color: #94a3b8;
+    padding: 80px 0 30px 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Grid Layout with top-aligned columns */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 60px;
+  }
+
+  /* Individual Footer Column Container */
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* Fixed Height Slot for Header / Logo Area to Ensure Perfect Line Alignment */
+  .footer-header-slot {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .footer-logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-logo-fallback {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Standardized Column Headings */
+  .footer-col-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    padding-bottom: 8px;
+    position: relative;
+    display: inline-block;
+    line-height: 1.2;
+  }
+
+  .footer-col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background-color: #0284c7;
+    border-radius: 2px;
+  }
+
+  /* Paragraph Text in Brand Column */
+  .footer-brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0 0 24px 0;
+    max-width: 300px;
+  }
+
+  /* Circular Social Icons */
+  .footer-social-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .social-circle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-circle-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+    transition: fill 0.2s ease;
+  }
+
+  .social-circle-btn:hover {
+    background-color: #0284c7;
+    transform: translateY(-2px);
+  }
+
+  /* Uniform Link Lists (Strict Vertical Alignment with Headings) */
+  .footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .footer-links-list li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-links-list a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-links-list a span {
+    color: #0284c7;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .footer-links-list a:hover {
+    color: #38bdf8;
+    transform: translateX(4px);
+  }
+
+  /* Contact List Items */
+  .footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  .footer-contact-icon {
+    color: #0284c7;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Subscribe Section Layout */
+  .subscribe-wrapper {
+    width: 100%;
+  }
+
+  .subscribe-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+  }
+
+  .subscribe-input-group {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+  }
+
+  .subscribe-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.85rem;
+  }
+
+  .subscribe-input::placeholder {
+    color: #64748b;
+  }
+
+  .btn-subscribe-send {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .btn-subscribe-send svg {
+    width: 14px;
+    height: 14px;
+    fill: #ffffff;
+  }
+
+  .btn-subscribe-send:hover {
+    background-color: #0369a1;
+  }
+
+  .subscribe-error-msg {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    min-height: 16px;
+  }
+
+  /* Footer Bottom Bar */
+  .footer-bottom {
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-bottom-links a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-bottom-links a:hover {
+    color: #38bdf8;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 992px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 35px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-section {
+      padding: 60px 0 25px 0;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-header-slot {
+      height: auto;
+      margin-bottom: 15px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- FOOTER SECTION -->
+<footer class="footer-section" id="footer">
+  <div class="footer-container">
+    
+    <div class="footer-grid">
+      
+      <!-- Column 1: Logo & Brand Information -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <a href="./index.html">
+          <img src="./logo.webp" alt="Stackly Logo" class="footer-logo-img" onerror="this.style.display='none'; document.getElementById('footerLogoFallback').style.display='flex';" /></a>
+          <div id="footerLogoFallback" class="footer-logo-fallback" style="display:none;">
+            
+          </div>
+        </div>
+
+        <p class="footer-brand-desc">
+          Delivering patient-centered medical care with compassion, clinical excellence, and state-of-the-art innovation.
+        </p>
+
+        <div class="footer-social-links">
+          <a href="404.html" class="social-circle-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7.5v-3H10V9.5C10 7.01 11.49 5.6 13.77 5.6c1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 3h-2.33v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Quick Links</h4>
+        </div>
+        <ul class="footer-links-list">
+           <li><a href="./index.html"><span>&gt;</span> Home</a></li>
+          <li><a href="./about.html"><span>&gt;</span> About Us</a></li>
+          <li><a href="./our serves.html"><span>&gt;</span> Services</a></li>
+          <li><a href="./doctors.html"><span>&gt;</span> Doctors</a></li>
+          <li><a href="./appointments.html"><span>&gt;</span> Appoinments</a></li>
+          <li><a href="./contact.html"><span>&gt;</span> Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Our Services -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Our Services</h4>
+        </div>
+        <ul class="footer-links-list">
+          <li><a href="404.html"><span>&gt;</span> Primary Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Health Plans</a></li>
+          <li><a href="404.html"><span>&gt;</span> Patient Reviews</a></li>
+          <li><a href="404.html"><span>&gt;</span> Specialist Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Working Hours</a></li>
+           <li><a href="404.html"><span>&gt;</span> Checkups List</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Info & Newsletter -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Contact Info</h4>
+        </div>
+        
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span>Salem, Tamil Nadu, India</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span>+91 89718 62253</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <span>telemedicine@stacklyhealth.com</span>
+          </div>
+        </div>
+
+        <div class="subscribe-wrapper">
+          <div class="subscribe-title">Subscribe for Health Tips</div>
+          <div class="subscribe-input-group">
+            <input type="email" id="footerSubscribeEmail" class="subscribe-input" placeholder="Enter your email" />
+            <button type="button" id="footerSubscribeBtn" class="btn-subscribe-send" aria-label="Subscribe">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+          <div class="subscribe-error-msg" id="footerSubscribeError"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly Healthcare. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms of Service</a>
+        <a href="404.html">Patient Rights</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  document.getElementById('footerSubscribeBtn').addEventListener('click', function() {
+    const emailInput = document.getElementById('footerSubscribeEmail');
+    const email = emailInput.value.trim().toLowerCase();
+    const errorMsg = document.getElementById('footerSubscribeError');
+
+    if (!email) {
+      errorMsg.textContent = 'Please enter your email address.';
+      return;
+    }
+
+    if (!email.endsWith('@gmail.com')) {
+      errorMsg.textContent = 'Email address must end with @gmail.com';
+      return;
+    }
+
+    errorMsg.textContent = '';
+    window.location.href = '404.html';
+  });
+</script>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>

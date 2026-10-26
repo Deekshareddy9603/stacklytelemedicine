@@ -1,0 +1,308 @@
+/* ===================================================
+   Stackly Healthcare Telemedicine Auth Styling
+   =================================================== */
+
+:root {
+  --primary: #0a8f8f;
+  --primary-dark: #065e5e;
+  --primary-light: #e6f4f4;
+  --dark-heading: #0f172a;
+  --text-muted: #64748b;
+  --bg-light: #f8fafc;
+  --border-color: #e2e8f0;
+  --error-color: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  background-color: whitesmoke;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Wrapper Layout */
+.auth-wrapper {
+  background:black;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(10, 143, 143, 0.08);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.auth-content-area {
+  padding: 48px 40px;
+}
+
+.form-logo-container {
+  margin-bottom: 24px;
+}
+
+.form-logo {
+  height: 48px;
+  object-fit: contain;
+}
+
+.header-block h2 {
+  font-size: 1.8rem;
+  color: var(--dark-heading);
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: white;
+}
+
+.header-block p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 28px;
+  color: white;
+}
+
+/* Form Controls */
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.input-group {
+  margin-bottom: 18px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.input-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--dark-heading);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.field-wrapper input,
+.field-wrapper select {
+  width: 100%;
+  padding: 13px 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  outline: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: var(--bg-light);
+  color: var(--dark-heading);
+}
+
+.field-wrapper input:focus,
+.field-wrapper select:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Inline Error Typography */
+.error-text {
+  color: var(--error-color);
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-left: 2px;
+  display: none;
+}
+
+.input-error {
+  border-color: var(--error-color) !important;
+  background-color: #fef2f2 !important;
+}
+
+/* Controls & Links */
+.forgot-container {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-container a {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.terms-group {
+  margin-bottom: 20px;
+}
+
+.agree {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-dark);
+}
+
+.switch-prompt {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 22px;
+}
+
+.switch-trigger {
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.btn-home-link {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-home-link:hover {
+  color: var(--dark-heading);
+}
+
+/* Sidebar Branding Section */
+.auth-sidebar {
+  background: linear-gradient(135deg, #0a8f8f 0%, #0f172a 100%);
+  padding: 48px 36px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  position: relative;
+}
+
+.medical-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #a5f3fc;
+}
+
+.auth-sidebar h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.tech-pulse-line {
+  width: 50px;
+  height: 4px;
+  background: #22d3ee;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+.telehealth-benefits {
+  list-style: none;
+  margin-bottom: 36px;
+}
+
+.telehealth-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+  color: #e2e8f0;
+}
+
+.telehealth-benefits i {
+  color: #22d3ee;
+}
+
+.compliance-tag {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+/* Responsive Rules */
+@media (max-width: 880px) {
+  .auth-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .auth-sidebar {
+    display: none;
+  }
+  .auth-content-area {
+    padding: 32px 24px;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stackly Healthcare | Patient & Provider Authentication</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+    <div class="auth-wrapper" data-aos="zoom-in" data-aos-duration="800">
+
+        <div class="auth-content-area">
+            
+            <!-- Brand Logo -->
+            <div class="form-logo-container">
+                <a href="index.html">
+                    <img src="./logo.webp" alt="Stackly Healthcare Logo" class="form-logo">
+                </a>
+            </div>
+
+            <!-- Dynamic Header Block -->
+            <div class="header-block">
+                <h2 id="formHeading">Welcome</h2>
+                <p id="formSubheading">Secure access to virtual consultations, medical records, and prescription refills.</p>
+            </div>
+
+            <!-- ================= LOGIN SECTION ================= -->
+            <div class="login-section" id="loginSection">
+                <form id="loginForm" novalidate>
+
+                    <div class="input-group">
+                        <label>Portal Pathway</label>
+                        <div class="field-wrapper">
+                            <i class="fa-solid fa-hospital-user input-icon"></i>
+                            <select id="loginRole" required>
+                                <option value="" disabled selected>Select your portal type</option>
+                                <option value="patient">Patient / Care Receiver</option>
+                                <option value="doctor">Medical Practitioner / Doctor</option>
+                            </select>
+                        </div>
+                        <span class="error-text" id="loginRoleError"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Registered Email</label>
+                        <div class="field-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input type="email" id="loginEmail" placeholder="patient@gmail.com" required>
+                        </div>
+                        <span class="error-text" id="loginEmailError"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Account Password</label>
+                        <div class="field-wrapper">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" id="loginPassword" class="password-field" placeholder="Enter security key" required> 
+                            <i class="fa-solid fa-eye toggle-password"></i>
+                        </div>
+                        <span class="error-text" id="loginPasswordError"></span>
+                    </div>
+
+                    <div class="forgot-container">
+                        <a href="./404.html" onclick="redirectTo404(event)"><i class="fa-solid fa-key"></i> Lost Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span>Log In</span>
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </button>
+                </form>
+
+                <div class="switch-prompt">
+                    New patient to Stackly? <span class="switch-trigger" onclick="showSignup()">Register Here</span>
+                </div>
+                <a href="index.html" class="btn-home-link"><i class="fa-solid fa-house-medical"></i> Back to Hospital Home</a>
+            </div>
+
+            <!-- ================= SIGNUP SECTION ================= -->
+            <div class="signup-section" id="signupSection" style="display: none;">
+                <form id="signupForm" novalidate>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>First Name</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-user-doctor input-icon"></i>
+                                <input type="text" id="signupFirstName" placeholder="Sarah" required>
+                            </div>
+                            <span class="error-text" id="signupFirstNameError"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Last Name</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-user input-icon"></i>
+                                <input type="text" id="signupLastName" placeholder="Jenkins" required>
+                            </div>
+                            <span class="error-text" id="signupLastNameError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Portal Pathway</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-user-gear input-icon"></i>
+                                <select id="signupRole" required>
+                                    <option value="" disabled selected>Select account type</option>
+                                    <option value="patient">Patient Account</option>
+                                    <option value="doctor">Healthcare Provider</option>
+                                </select>
+                            </div>
+                            <span class="error-text" id="signupRoleError"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Mobile Contact (10 Digits)</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-phone input-icon"></i>
+                                <input type="tel" id="signupPhone" placeholder="9876543210" maxlength="10" required>
+                            </div>
+                            <span class="error-text" id="signupPhoneError"></span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address (@gmail.com)</label>
+                        <div class="field-wrapper">
+                            <i class="fa-solid fa-envelope-open-text input-icon"></i>
+                            <input type="email" id="signupEmail" placeholder="yourname@gmail.com" required>
+                        </div>
+                        <span class="error-text" id="signupEmailError"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>Password</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="signupPassword" class="password-field" placeholder="Create security key" required> 
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                            <span class="error-text" id="signupPasswordError"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Confirm Password</label>
+                            <div class="field-wrapper">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="signupConfirmPassword" class="password-field" placeholder="Repeat key" required> 
+                                <i class="fa-solid fa-eye toggle-password"></i>
+                            </div>
+                            <span class="error-text" id="signupConfirmPasswordError"></span>
+                        </div>
+                    </div>
+
+                    <div class="terms-group">
+                        <div class="agree">
+                            <input type="checkbox" id="agreeTerms">
+                            <label for="agreeTerms">I agree terms & tele-health terms.</label>
+                        </div>
+                        <span class="error-text" id="agreeError"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Complete Registration</span>
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </button>
+                </form>
+
+                <div class="switch-prompt">
+                    Already registered? <span class="switch-trigger" onclick="showLogin()">Sign In here</span>
+                </div>
+                <a href="index.html" class="btn-home-link"><i class="fa-solid fa-house-medical"></i> Back to Hospital Home</a>
+            </div>
+
+        </div>
+
+        <!-- Medical Hero Sidebar -->
+        <div class="auth-sidebar" data-aos="fade-left" data-aos-delay="200">
+            <div class="sidebar-overlay-content" data-aos="fade-up" data-aos-delay="400">
+                <div class="medical-badge"><i class="fa-solid fa-heart-pulse"></i> 24/7 Virtual Care</div>
+                <h3>Patient-Centred Telemedicine Network</h3>
+                <div class="tech-pulse-line"></div>
+                
+                <ul class="telehealth-benefits">
+                    <li><i class="fa-solid fa-circle-check"></i> Encrypted HD Video Consultations</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Instant Lab Report Downloads</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Direct Prescription Routing</li>
+                </ul>
+
+                <div class="compliance-tag">
+                    <i class="fa-solid fa-user-shield"></i> HIPAA Encrypted & Standard Compliant
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-in-out', once: true });
+
+        function showSignup() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('signupSection').style.display = 'block';
+            document.getElementById('formHeading').innerText = 'Start Medical Care';
+            document.getElementById('formSubheading').innerText = 'Create your patient account to connect with verified specialists.';
+            clearErrors();
+        }
+
+        function showLogin() {
+            document.getElementById('signupSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('formHeading').innerText = 'Patient Portal Access';
+            document.getElementById('formSubheading').innerText = 'Secure access to virtual consultations, medical records, and prescription refills.';
+            clearErrors();
+        }
+
+        function redirectTo404(e) {
+            e.preventDefault();
+            window.location.href = '404.html';
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error-text').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+        }
+
+        // Toggle Password Visibility
+        document.querySelectorAll('.toggle-password').forEach(toggleIcon => {
+            toggleIcon.addEventListener('click', function() {
+                const passwordInput = this.parentElement.querySelector('.password-field');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.classList.replace('fa-eye', 'fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    this.classList.replace('fa-eye-slash', 'fa-eye');
+                }
+            });
+        });
+
+        // Inline Error Helper
+        function triggerError(inputId, errorId, message) {
+            const errSpan = document.getElementById(errorId);
+            if(errSpan) {
+                errSpan.innerText = message;
+                errSpan.style.display = 'block';
+            }
+            if(inputId) {
+                const inputEl = document.getElementById(inputId);
+                if(inputEl) inputEl.classList.add('input-error');
+            }
+        }
+
+        // Centralized Redirect Helper based on Role
+        function redirectUserByRole(role) {
+            if (role === 'patient') {
+                window.location.href = 'patient.html';
+            } else if (role === 'doctor') {
+                window.location.href = 'health.html';
+            }
+        }
+
+        // ================= LOGIN FORM VALIDATION =================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearErrors();
+
+            const role = document.getElementById('loginRole');
+            const email = document.getElementById('loginEmail');
+            const password = document.getElementById('loginPassword');
+            let isValid = true;
+
+            if (!role.value) { 
+                triggerError('loginRole', 'loginRoleError', 'Please select your portal type.'); 
+                isValid = false; 
+            }
+            
+            if (!email.value.trim().toLowerCase().endsWith('@gmail.com')) {
+                triggerError('loginEmail', 'loginEmailError', 'Email must end with @gmail.com');
+                isValid = false;
+            }
+
+            const strongPasswordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}/;
+            if (!strongPasswordRegex.test(password.value)) {
+                triggerError('loginPassword', 'loginPasswordError', 'Must be 8+ chars with uppercase, lowercase, number & symbol.');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Save session info
+                localStorage.setItem('currentUserEmail', email.value.trim());
+                localStorage.setItem('currentUser', email.value.trim().split('@')[0]);
+                localStorage.setItem('userRole', role.value);
+
+                // Redirect based on selected role
+                redirectUserByRole(role.value);
+            }
+        });
+
+        // ================= SIGNUP FORM VALIDATION =================
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearErrors();
+
+            const fn = document.getElementById('signupFirstName');
+            const ln = document.getElementById('signupLastName');
+            const role = document.getElementById('signupRole');
+            const phone = document.getElementById('signupPhone');
+            const email = document.getElementById('signupEmail');
+            const pass = document.getElementById('signupPassword');
+            const confirmPass = document.getElementById('signupConfirmPassword');
+            const agree = document.getElementById('agreeTerms');
+            let isValid = true;
+
+            const alphaRegex = /^[A-Za-z]+$/;
+            if (!alphaRegex.test(fn.value.trim())) { triggerError('signupFirstName', 'signupFirstNameError', 'Alphabets only.'); isValid = false; }
+            if (!alphaRegex.test(ln.value.trim())) { triggerError('signupLastName', 'signupLastNameError', 'Alphabets only.'); isValid = false; }
+            
+            if (!role.value) { triggerError('signupRole', 'signupRoleError', 'Select account type.'); isValid = false; }
+
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone.value.trim())) { triggerError('signupPhone', 'signupPhoneError', 'Enter exactly 10 digits.'); isValid = false; }
+
+            if (!email.value.trim().toLowerCase().endsWith('@gmail.com')) {
+                triggerError('signupEmail', 'signupEmailError', 'Email must end with @gmail.com');
+                isValid = false;
+            }
+
+            const strongPasswordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}/;
+            if (!strongPasswordRegex.test(pass.value)) {
+                triggerError('signupPassword', 'signupPasswordError', 'Must be 8+ chars with Upper, Lower, Num & Symbol.');
+                isValid = false;
+            }
+
+            if (pass.value !== confirmPass.value) {
+                triggerError('signupConfirmPassword', 'signupConfirmPasswordError', 'Passwords do not match.');
+                isValid = false;
+            }
+
+            if (!agree.checked) {
+                triggerError(null, 'agreeError', 'You must accept the terms.');
+                isValid = false;
+            }
+
+            if (isValid) {
+                const fullName = `${fn.value.trim()} ${ln.value.trim()}`;
+                
+                // Save session info
+                localStorage.setItem('currentUserEmail', email.value.trim());
+                localStorage.setItem('currentUser', fullName);
+                localStorage.setItem('userRole', role.value);
+
+                // Redirect based on selected role
+                redirectUserByRole(role.value);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stackly - Next-Gen Telemedicine Platform</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <style>
+  /* ================= MODERN PROFESSIONAL NAVBAR ================= */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .nav-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 75px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Logo */
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  /* Desktop Menu Links */
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Box-type Hover & Active States */
+  .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+    box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
+  }
+
+  /* Right Actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Primary Blue Login Button */
+  .login-btn {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  }
+
+  .login-btn:hover {
+    background-color: #0369a1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+  }
+
+  /* Mobile Hamburger Button */
+  .mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    z-index: 1001;
+  }
+
+  .mobile-toggle .bar {
+    width: 24px;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Active Hamburger Animation */
+  .mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .mobile-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Dropdown Panel directly below Navbar */
+  .mobile-dropdown {
+    display: none;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    width: 100%;
+    background-color: #0a0a0c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 20px 5%;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.8);
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .mobile-dropdown.show {
+    display: flex;
+  }
+
+  .mobile-nav-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-link:hover, .mobile-nav-link.active {
+    color: #ffffff;
+    background-color: rgba(2, 132, 199, 0.2);
+    border-color: #0284c7;
+  }
+
+  .mobile-login-btn {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .desktop-nav, .desktop-only-btn {
+      display: none !important;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar" id="navbar">
+  <div class="nav-container">
+    
+    <!-- Left: Logo Slot -->
+    <a href="./index.html" class="logo-link">
+      <img src="./logo.webp" alt="Stackly Logo" class="nav-logo" onerror="this.style.display='none'; document.getElementById('navFallbackText').style.display='block';" />
+      <span id="navFallbackText" style="display:none; color:#ffffff; font-weight:800; font-size:1.3rem;">💙 STACKLY</span>
+    </a>
+
+    <!-- Center: Desktop Menu -->
+    <nav class="nav-menu desktop-nav" id="desktopNav">
+      <a href="./index.html" class="nav-link ">Home</a>
+      <a href="./about.html" class="nav-link active">About Us</a>
+      <a href="./our serves.html" class="nav-link">Our Services</a>
+      <a href="./doctors.html" class="nav-link">Find a Doctor</a>
+      <a href="./appointments.html" class="nav-link">Appointments</a>
+      <a href="./contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Right: Desktop Login Button & Mobile Hamburger Toggle -->
+    <div class="nav-actions">
+      <button class="login-btn desktop-only-btn" id="loginBtn">Login</button>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile Dropdown Menu (Appears Directly Below Navbar Header) -->
+  <div class="mobile-dropdown" id="mobileDropdown">
+    <a href="./index.html" class="mobile-nav-link ">Home</a>
+    <a href="./about.html" class="mobile-nav-link active">About Us</a>
+    <a href="./our serves.html" class="mobile-nav-link">Our Services</a>
+    <a href="./doctors.html" class="mobile-nav-link">Find a Doctor</a>
+    <a href="./appointments.html" class="mobile-nav-link">Appointments</a>
+    <a href="./contact.html" class="mobile-nav-link">Contact</a>
+    <button class="login-btn mobile-login-btn" id="mobileDropdownLoginBtn">Login</button>
+  </div>
+</header>
+
+<script>
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileDropdown = document.getElementById('mobileDropdown');
+  const loginBtn = document.getElementById('loginBtn');
+  const mobileDropdownLoginBtn = document.getElementById('mobileDropdownLoginBtn');
+
+  // Toggle mobile dropdown menu directly below navbar
+  mobileToggle.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mobileDropdown.classList.toggle('show');
+  });
+
+  // Redirect Login actions directly to login.html page
+  function handleLoginRedirect() {
+    window.location.href = 'login.html';
+  }
+
+  loginBtn.addEventListener('click', handleLoginRedirect);
+  mobileDropdownLoginBtn.addEventListener('click', handleLoginRedirect);
+</script>
+<style>
+  /* ================= SECTION 1: HERO SECTION ================= */
+  .about-hero-section {
+    position: relative;
+    padding: 140px 0 100px 0;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.75) 0%, rgba(2, 132, 199, 0.6) 100%), 
+                url('./about-main.webp') center/cover no-repeat;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Soft Ambient Glow Overlay */
+  .about-hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .about-hero-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about-hero-content {
+    max-width: 680px;
+  }
+
+  /* Pill Tag */
+  .about-hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    color: #e0f2fe;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Hero Title */
+  .about-hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1.2px;
+    margin-bottom: 20px;
+  }
+
+  .about-hero-title span {
+    color: #38bdf8;
+    background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Subtitle */
+  .about-hero-subtitle {
+    font-size: 1.15rem;
+    color: #f1f5f9;
+    line-height: 1.7;
+    margin-bottom: 35px;
+  }
+
+  /* Action Buttons */
+  .about-hero-btn-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-about-primary {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-about-primary:hover {
+    background: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(2, 132, 199, 0.55);
+  }
+
+  .btn-about-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .btn-about-secondary:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 992px) {
+    .about-hero-section {
+      padding: 100px 0 80px 0;
+      min-height: auto;
+    }
+    .about-hero-title {
+      font-size: 2.8rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .about-hero-section {
+      padding: 80px 0 60px 0;
+      text-align: center;
+    }
+    .about-hero-content {
+      margin: 0 auto;
+    }
+    .about-hero-title {
+      font-size: 2.1rem;
+    }
+    .about-hero-subtitle {
+      font-size: 0.98rem;
+    }
+    .about-hero-btn-group {
+      flex-direction: column;
+      width: 100%;
+    }
+    .btn-about-primary,
+    .btn-about-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<!-- SECTION 1: HERO SECTION -->
+<section class="about-hero-section" id="about-hero">
+  <div class="about-hero-container">
+    <div class="about-hero-content">
+      
+     <br>
+     <br> <div class="about-hero-pill">
+        🛡️ About Stackly
+      </div>
+
+      <h1 class="about-hero-title">
+        Building a Healthier <br>Tomorrow, <span>Together</span>
+      </h1>
+
+      <p class="about-hero-subtitle">
+        We are a team of passionate medical students, future doctors and innovators, united by a common goal — to make quality healthcare accessible, simple, and affordable for everyone.
+      </p>
+
+      <div class="about-hero-btn-group">
+        <a href="404.html" class="btn-about-primary" id="ourMissionBtn">
+          Our Mission &rarr;
+        </a>
+        <a href="./404.html" class="btn-about-secondary">
+          👥 Meet Our Team
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+<style>
+  /* ================= SECTION 2: OUR STORY SECTION ================= */
+  .our-story-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .our-story-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Column: Text Copy */
+  .story-left-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .story-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  .story-title span {
+    color: #0284c7;
+  }
+
+  .story-description {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 30px;
+  }
+
+  .btn-story-learn {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .btn-story-learn:hover {
+    background-color: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(2, 132, 199, 0.45);
+  }
+
+  /* Right Column: Visual Image Graphic */
+  .story-right-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Curved Image Container */
+  .story-image-card {
+    width: 100%;
+    max-width: 520px;
+    height: 440px;
+    border-radius: 40px 160px 40px 160px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12);
+    border: 4px solid #f0f9ff;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .story-image-card:hover {
+    border-radius: 160px 40px 160px 40px;
+    transform: translateY(-6px);
+    box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.25);
+  }
+
+  .story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .story-image-card:hover .story-img {
+    transform: scale(1.05);
+  }
+
+  /* Top Right Handwritten Tag */
+  .story-handwritten-tag {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    font-family: 'Caveat', cursive, sans-serif;
+    color: #0284c7;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    z-index: 3;
+    transition: transform 0.3s ease;
+  }
+
+  .story-handwritten-tag:hover {
+    transform: scale(1.1) rotate(-3deg);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 992px) {
+    .our-story-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .story-left-content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .story-title {
+      font-size: 2.2rem;
+    }
+
+    .story-image-card {
+      max-width: 100%;
+      height: 380px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .our-story-section {
+      padding: 70px 0;
+    }
+
+    .story-title {
+      font-size: 1.9rem;
+    }
+
+    .story-description {
+      font-size: 0.98rem;
+    }
+
+    .story-image-card {
+      height: 300px;
+      border-radius: 30px;
+    }
+
+    .story-handwritten-tag {
+      top: -15px;
+      right: 10px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<!-- SECTION 2: OUR STORY SECTION -->
+<section class="our-story-section" id="our-story">
+  <div class="our-story-container">
+    
+    <!-- Left Column: Copy -->
+    <div class="story-left-content">
+      <span class="story-tag">Our Story</span>
+
+      <h2 class="story-title">
+        From Medical Students <br>to a <span>Purpose-Driven Team</span>
+      </h2>
+
+      <p class="story-description">
+        Stackly Telemedicine started with a simple idea — what if quality healthcare could be just a click away? As a group of medical students, we experienced the challenges of accessing healthcare, long waiting hours and limited guidance. This inspired us to build a platform that connects people with trusted doctors, anytime, anywhere.
+      </p>
+
+      <a href="404.html" class="btn-story-learn" id="storyLearnMoreBtn">
+        Learn More &rarr;
+      </a>
+    </div>
+
+    <!-- Right Column: Visual -->
+    <div class="story-right-visual">
+      <!-- Handwritten Accent -->
+      <div class="story-handwritten-tag">
+        Better Healthcare<br>for All ♡
+      </div>
+
+      <div class="story-image-card">
+        <img src="./about1.webp" alt="Our Story Medical Team" class="story-img" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('storyLearnMoreBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= SECTION 3: MISSION, VISION & VALUES ================= */
+  .mvv-section {
+    padding: 110px 0;
+    background: radial-gradient(circle at 50% 20%, #f0f9ff 0%, #f8fafc 80%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .mvv-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header Layout */
+  .mvv-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .mvv-header-left .mvv-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .mvv-header-left .mvv-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .mvv-header-right p {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* 3 Cards Grid */
+  .mvv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .mvv-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mvv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #0284c7, #38bdf8);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .mvv-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 45px -12px rgba(2, 132, 199, 0.18);
+    border-color: rgba(56, 189, 248, 0.5);
+  }
+
+  .mvv-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Icon Box */
+  .mvv-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+    transition: all 0.35s ease;
+  }
+
+  .mvv-card:hover .mvv-icon-wrapper {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    transform: scale(1.08) rotate(4deg);
+    box-shadow: 0 12px 25px rgba(2, 132, 199, 0.3);
+  }
+
+  .mvv-card-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 14px;
+  }
+
+  .mvv-card-desc {
+    font-size: 0.98rem;
+    color: #64748b;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  /* Values List inside 3rd card */
+  .values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .value-badge {
+    background: #f0f9ff;
+    color: #0284c7;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 50px;
+    border: 1px solid rgba(2, 132, 199, 0.15);
+  }
+
+  /* Mobile & Tablet Responsiveness */
+  @media (max-width: 992px) {
+    .mvv-header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .mvv-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .mvv-section {
+      padding: 70px 0;
+    }
+
+    .mvv-header-left .mvv-title {
+      font-size: 2.1rem;
+    }
+
+    .mvv-card {
+      padding: 30px 20px;
+      border-radius: 20px;
+    }
+  }
+</style>
+
+<!-- SECTION 3: MISSION, VISION & VALUES -->
+<section class="mvv-section" id="mission-vision">
+  <div class="mvv-container">
+    
+    <!-- Section Header -->
+    <div class="mvv-header">
+      <div class="mvv-header-left">
+        <span class="mvv-tag">Our Purpose</span>
+        <h2 class="mvv-title">Guided by Values, <br>Driven by Impact</h2>
+      </div>
+      <div class="mvv-header-right">
+        <p>We are committed to making healthcare more accessible, reliable, and human. Our mission, vision, and values shape every step we take.</p>
+      </div>
+    </div>
+
+    <!-- 3 Cards Layout -->
+    <div class="mvv-grid">
+      
+      <!-- Card 1: Our Mission -->
+      <div class="mvv-card">
+        <div class="mvv-icon-wrapper">🎯</div>
+        <h3 class="mvv-card-title">Our Mission</h3>
+        <p class="mvv-card-desc">To bridge the gap between patients and quality healthcare through technology and trust.</p>
+      </div>
+
+      <!-- Card 2: Our Vision -->
+      <div class="mvv-card">
+        <div class="mvv-icon-wrapper">👁️</div>
+        <h3 class="mvv-card-title">Our Vision</h3>
+        <p class="mvv-card-desc">A healthier world where everyone has access to the right medical care, anytime, anywhere.</p>
+      </div>
+
+      <!-- Card 3: Our Values -->
+      <div class="mvv-card">
+        <div class="mvv-icon-wrapper">💙</div>
+        <h3 class="mvv-card-title">Our Values</h3>
+        <p class="mvv-card-desc">Compassion, Integrity, Innovation, Accessibility, and Excellence in every medical interaction.</p>
+        <ul class="values-list">
+          <li class="value-badge">Compassion</li>
+          <li class="value-badge">Integrity</li>
+          <li class="value-badge">Innovation</li>
+          <li class="value-badge">Accessibility</li>
+          <li class="value-badge">Excellence</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= SECTION 4: WHY CHOOSE US ================= */
+  .why-choose-section {
+    padding: 110px 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Decorative Ambient Glow Orbs */
+  .why-choose-section::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: rgba(2, 132, 199, 0.15);
+    filter: blur(100px);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .why-choose-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Left Column: Heading & Call to Action */
+  .why-left-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .why-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    width: fit-content;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+  }
+
+  .why-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .why-title span {
+    color: #38bdf8;
+  }
+
+  .why-subtitle {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 35px;
+  }
+
+  .btn-why-explore {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .btn-why-explore:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(56, 189, 248, 0.45);
+  }
+
+  /* Right Column: 6 Features Grid */
+  .why-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .why-stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .why-stat-card:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .why-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .why-stat-card:hover .why-icon-box {
+    transform: scale(1.1) rotate(5deg);
+    background: #0284c7;
+    color: #ffffff;
+  }
+
+  .why-stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .why-stat-label {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 6px;
+  }
+
+  .why-stat-desc {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .why-choose-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .why-left-content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .why-stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .why-choose-section {
+      padding: 70px 0;
+    }
+
+    .why-title {
+      font-size: 2.1rem;
+    }
+
+    .why-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .why-stat-card {
+      padding: 20px 14px;
+    }
+
+    .why-stat-number {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<!-- SECTION 4: WHY CHOOSE US -->
+<section class="why-choose-section" id="why-choose-us">
+  <div class="why-choose-container">
+    
+    <!-- Left Side Content -->
+    <div class="why-left-content">
+      <div class="why-pill">
+        💙 Why Stackly?
+      </div>
+
+      <h2 class="why-title">
+        More Than Just a Platform, <br><span>We're Your Healthcare Partner</span>
+      </h2>
+
+      <p class="why-subtitle">
+        We combine technology, expertise and compassion to provide a seamless telemedicine experience — built by medical students, for a healthier tomorrow.
+      </p>
+
+      <a href="404.html" class="btn-why-explore" id="exploreServicesBtn">
+        Explore Our Services &rarr;
+      </a>
+    </div>
+
+    <!-- Right Side 6 Stats Grid -->
+    <div class="why-stats-grid">
+      
+      <!-- Stat 1 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">🩺</div>
+        <div class="why-stat-number">100+</div>
+        <div class="why-stat-label">Trusted Doctors</div>
+        <div class="why-stat-desc">Verified & experienced medical professionals</div>
+      </div>
+
+      <!-- Stat 2 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">👥</div>
+        <div class="why-stat-number">50K+</div>
+        <div class="why-stat-label">Happy Patients</div>
+        <div class="why-stat-desc">Growing together for better health</div>
+      </div>
+
+      <!-- Stat 3 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">🕒</div>
+        <div class="why-stat-number">24/7</div>
+        <div class="why-stat-label">Support</div>
+        <div class="why-stat-desc">We're here, always ready to help</div>
+      </div>
+
+      <!-- Stat 4 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">⭐</div>
+        <div class="why-stat-number">98%</div>
+        <div class="why-stat-label">Satisfaction Rate</div>
+        <div class="why-stat-desc">Real people, real patient stories</div>
+      </div>
+
+      <!-- Stat 5 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">🛡️</div>
+        <div class="why-stat-number">100%</div>
+        <div class="why-stat-label">Secure & Private</div>
+        <div class="why-stat-desc">Your health data is safe with us</div>
+      </div>
+
+      <!-- Stat 6 -->
+      <div class="why-stat-card">
+        <div class="why-icon-box">📱</div>
+        <div class="why-stat-number">Multiple</div>
+        <div class="why-stat-label">Consultation Modes</div>
+        <div class="why-stat-desc">Video call, phone call & direct chat</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('exploreServicesBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+<style>
+  /* ================= SECTION 5: OUR JOURNEY (TIMELINE) ================= */
+  .our-journey-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .our-journey-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .journey-header {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 70px auto;
+  }
+
+  .journey-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .journey-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  .journey-title span {
+    color: #0284c7;
+  }
+
+  .journey-subtitle {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Timeline Grid Wrapper */
+  .timeline-wrapper {
+    position: relative;
+    padding: 30px 0;
+  }
+
+  /* Connecting Curved Line (Desktop) */
+  .timeline-connecting-line {
+    position: absolute;
+    top: 70px;
+    left: 8%;
+    right: 8%;
+    height: 3px;
+    background: linear-gradient(90deg, #bae6fd 0%, #0284c7 50%, #38bdf8 100%);
+    z-index: 1;
+    border-radius: 2px;
+  }
+
+  /* 4 Steps Grid */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Timeline Node Card */
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Node Icon Circle */
+  .node-icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 4px solid #e0f2fe;
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #0284c7;
+    margin-bottom: 24px;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .timeline-item:hover .node-icon-circle {
+    transform: scale(1.15) rotate(6deg);
+    border-color: #0284c7;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    box-shadow: 0 15px 30px rgba(2, 132, 199, 0.3);
+  }
+
+  /* Milestone Card Box */
+  .timeline-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 28px 20px;
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.06);
+    transition: all 0.35s ease;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeline-item:hover .timeline-card {
+    transform: translateY(-8px);
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 20px 40px -12px rgba(2, 132, 199, 0.18);
+  }
+
+  .timeline-year {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0284c7;
+    margin-bottom: 6px;
+  }
+
+  .timeline-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  .timeline-desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .timeline-connecting-line {
+      display: none;
+    }
+
+    .timeline-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .our-journey-section {
+      padding: 70px 0;
+    }
+
+    .journey-title {
+      font-size: 2rem;
+    }
+
+    .timeline-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .node-icon-circle {
+      width: 68px;
+      height: 68px;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+
+    .timeline-card {
+      padding: 24px 18px;
+    }
+  }
+</style>
+
+<!-- SECTION 5: OUR JOURNEY SECTION -->
+<section class="our-journey-section" id="our-journey">
+  <div class="our-journey-container">
+    
+    <!-- Header -->
+    <div class="journey-header">
+      <span class="journey-tag">Our Journey</span>
+      <h2 class="journey-title">How Stackly <span>Grew</span> Over the Years</h2>
+      <p class="journey-subtitle">From a student project to a nationwide telemedicine initiative.</p>
+    </div>
+
+    <!-- Timeline Grid -->
+    <div class="timeline-wrapper">
+      <div class="timeline-connecting-line"></div>
+
+      <div class="timeline-grid">
+        
+        <!-- Milestone 1 -->
+        <div class="timeline-item">
+          <div class="node-icon-circle">💡</div>
+          <div class="timeline-card">
+            <span class="timeline-year">2021</span>
+            <h3 class="timeline-heading">The Idea</h3>
+            <p class="timeline-desc">A group of medical students came together with a vision to make healthcare accessible.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 2 -->
+        <div class="timeline-item">
+          <div class="node-icon-circle">🚀</div>
+          <div class="timeline-card">
+            <span class="timeline-year">2022</span>
+            <h3 class="timeline-heading">The Beginning</h3>
+            <p class="timeline-desc">Built the first version of Stackly and started connecting with local doctors.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 3 -->
+        <div class="timeline-item">
+          <div class="node-icon-circle">🌐</div>
+          <div class="timeline-card">
+            <span class="timeline-year">2023</span>
+            <h3 class="timeline-heading">Growing Together</h3>
+            <p class="timeline-desc">Expanded our network, added more specialties and improved our platform.</p>
+          </div>
+        </div>
+
+        <!-- Milestone 4 -->
+        <div class="timeline-item">
+          <div class="node-icon-circle">⭐</div>
+          <div class="timeline-card">
+            <span class="timeline-year">2024+</span>
+            <h3 class="timeline-heading">A Bigger Impact</h3>
+            <p class="timeline-desc">Reaching more people, more cities and creating a healthier future.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= SECTION 6: OUR TEAM (CARD GRID) ================= */
+  .our-team-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .our-team-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  /* Section Header Grid */
+  .team-header {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .team-header-left .team-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .team-header-left .team-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .team-header-left .team-title span {
+    color: #0284c7;
+  }
+
+  .team-header-right p {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Team Members Grid (5 Columns on Desktop) */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+  }
+
+  /* Team Member Card */
+  .team-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.05);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px rgba(2, 132, 199, 0.2);
+    border-color: #38bdf8;
+  }
+
+  /* Member Photo Frame */
+  .team-photo-wrapper {
+    width: 100%;
+    height: 190px;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #e0f2fe;
+    margin-bottom: 18px;
+    position: relative;
+  }
+
+  .team-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .team-card:hover .team-photo-wrapper img {
+    transform: scale(1.08);
+  }
+
+  .team-member-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+
+  .team-member-role {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #0284c7;
+    margin-bottom: 4px;
+  }
+
+  .team-member-desc {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 16px;
+  }
+
+  /* Social Icons Row */
+  .team-social-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .social-link-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-link-btn:hover {
+    background-color: #0284c7;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1100px) {
+    .team-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 992px) {
+    .team-header {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .our-team-section {
+      padding: 70px 0;
+    }
+
+    .team-header-left .team-title {
+      font-size: 2.1rem;
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .team-photo-wrapper {
+      height: 160px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .team-photo-wrapper {
+      height: 220px;
+    }
+  }
+</style>
+
+<!-- SECTION 6: OUR TEAM SECTION -->
+<section class="our-team-section" id="our-team">
+  <div class="our-team-container">
+    
+    <!-- Section Header -->
+    <div class="team-header">
+      <div class="team-header-left">
+        <span class="team-tag">Meet Our Team</span>
+        <h2 class="team-title">A Team of Future Doctors <br>with a <span>Shared Vision</span></h2>
+      </div>
+      <div class="team-header-right">
+        <p>We are a group of dedicated medical students, fueled by curiosity, compassion and a desire to create real change in healthcare.</p>
+      </div>
+    </div>
+
+    <!-- 5 Member Card Grid -->
+    <div class="team-grid">
+      
+      <!-- Member 1 -->
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="./doc1.webp" alt="Deeksha K." onerror="this.src='https://images.unsplash.com/photo-1594824813566-88855ce7890b?auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <h3 class="team-member-name">Deeksha </h3>
+        <span class="team-member-role">Founder & Developer</span>
+        <span class="team-member-desc">Medical Student</span>
+        <div class="team-social-row">
+          <a href="404.html" class="social-link-btn" title="LinkedIn">in</a>
+          <a href="404.html" class="social-link-btn" title="Twitter">𝕏</a>
+         
+        </div>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="./doc2.webp" alt="Aarav Sharma" onerror="this.src='https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <h3 class="team-member-name">Aarav Sharma</h3>
+        <span class="team-member-role">Co-Founder</span>
+        <span class="team-member-desc">Medical Student</span>
+        <div class="team-social-row">
+          <a href="404.html" class="social-link-btn" title="LinkedIn">in</a>
+          <a href="404.html" class="social-link-btn" title="Twitter">𝕏</a>
+          
+        </div>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="./doc3.webp" alt="Sneha Reddy" onerror="this.src='https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <h3 class="team-member-name">Sneha Reddy</h3>
+        <span class="team-member-role">UI/UX Designer</span>
+        <span class="team-member-desc">Medical Student</span>
+        <div class="team-social-row">
+          <a href="404.html" class="social-link-btn" title="LinkedIn">in</a>
+          <a href="404.html" class="social-link-btn" title="Twitter">𝕏</a>
+          
+        </div>
+      </div>
+
+      <!-- Member 4 -->
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="./doc4.webp" alt="Rohan Patil" onerror="this.src='https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <h3 class="team-member-name">Rohan Patil</h3>
+        <span class="team-member-role">Backend Developer</span>
+        <span class="team-member-desc">Medical Student</span>
+        <div class="team-social-row">
+          <a href="404.html" class="social-link-btn" title="LinkedIn">in</a>
+          <a href="404.html" class="social-link-btn" title="Twitter">𝕏</a>
+          
+        </div>
+      </div>
+
+      <!-- Member 5 -->
+      <div class="team-card">
+        <div class="team-photo-wrapper">
+          <img src="./patient.html" alt="Priya Nair" onerror="this.src='https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=600&q=80'" />
+        </div>
+        <h3 class="team-member-name">Priya Nair</h3>
+        <span class="team-member-role">Content & Research</span>
+        <span class="team-member-desc">Medical Student</span>
+        <div class="team-social-row">
+          <a href="404.html" class="social-link-btn" title="LinkedIn">in</a>
+          <a href="404.html" class="social-link-btn" title="Twitter">𝕏</a>
+          
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= SECTION 7: WHAT DRIVES US ================= */
+  .drives-us-section {
+    padding: 110px 0;
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .drives-us-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Image Visual Box */
+  .drives-left-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .drives-image-card {
+    width: 100%;
+    max-width: 520px;
+    height: 420px;
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.12);
+    border: 1px solid #e2e8f0;
+  }
+
+  .drives-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .drives-image-card:hover .drives-img {
+    transform: scale(1.05);
+  }
+
+  /* Handwritten Overlay Note on Image */
+  .drives-handwritten-badge {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding: 14px 22px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: right;
+  }
+
+  .drives-handwritten-text {
+    font-family: 'Caveat', cursive, sans-serif;
+    color: #38bdf8;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+
+  /* Right Copy Content */
+  .drives-right-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drives-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .drives-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+  }
+
+  .drives-title span {
+    color: #0284c7;
+  }
+
+  .drives-description {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 35px;
+  }
+
+  /* 3 Metric Stat Items Row */
+  .drives-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .drives-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .drives-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .drives-stat-info strong {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+  }
+
+  .drives-stat-info span {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .drives-us-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .drives-right-content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .drives-image-card {
+      max-width: 100%;
+      height: 360px;
+    }
+
+    .drives-stats-row {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .drives-us-section {
+      padding: 70px 0;
+    }
+
+    .drives-title {
+      font-size: 2rem;
+    }
+
+    .drives-stats-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .drives-stat-item {
+      justify-content: center;
+    }
+
+    .drives-handwritten-badge {
+      bottom: 15px;
+      right: 15px;
+      padding: 10px 16px;
+    }
+
+    .drives-handwritten-text {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<!-- SECTION 7: WHAT DRIVES US SECTION -->
+<section class="drives-us-section" id="what-drives-us">
+  <div class="drives-us-container">
+    
+    <!-- Left Visual Image Box -->
+    <div class="drives-left-visual">
+      <div class="drives-image-card">
+        <img src="./about2.webp" alt="Stethoscope & Learning" class="drives-img" onerror="this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80'" />
+        
+        <div class="drives-handwritten-badge">
+          <div class="drives-handwritten-text">
+            Learning Today, Healing Tomorrow ♡
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Copy & Stats -->
+    <div class="drives-right-content">
+      <span class="drives-tag">Our Passion</span>
+
+      <h2 class="drives-title">
+        Driven by <span>Learning</span>, <br>United by <span>Purpose</span>
+      </h2>
+
+      <p class="drives-description">
+        As medical students, we are constantly learning, exploring and growing — and we bring that same mindset into everything we do at Stackly.
+      </p>
+
+      <!-- 3 Metrics Stats Row -->
+      <div class="drives-stats-row">
+        
+        <div class="drives-stat-item">
+          <div class="drives-stat-icon">💙</div>
+          <div class="drives-stat-info">
+            <strong>4</strong>
+            <span>Years of Journey</span>
+          </div>
+        </div>
+
+        <div class="drives-stat-item">
+          <div class="drives-stat-icon">🎓</div>
+          <div class="drives-stat-info">
+            <strong>1000+</strong>
+            <span>Hours of Learning</span>
+          </div>
+        </div>
+
+        <div class="drives-stat-item">
+          <div class="drives-stat-icon">👥</div>
+          <div class="drives-stat-info">
+            <strong>1</strong>
+            <span>Shared Vision</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= SECTION 8: IMPACT SECTION ================= */
+  .impact-section {
+    padding: 110px 0;
+    position: relative;
+    background: url('./about3.webp') center/cover no-repeat fixed;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Dark Overlay Gradient */
+  .impact-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 132, 199, 0.75) 100%);
+    backdrop-filter: blur(3px);
+    z-index: 1;
+  }
+
+  .impact-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Side Copy */
+  .impact-left-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .impact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #38bdf8;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .impact-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.18;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .impact-title span {
+    color: #38bdf8;
+  }
+
+  .impact-description {
+    font-size: 1.05rem;
+    color: #e2e8f0;
+    line-height: 1.7;
+    margin-bottom: 35px;
+    max-width: 520px;
+  }
+
+  .btn-impact-join {
+    background: #ffffff;
+    color: #0284c7;
+    padding: 15px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .btn-impact-join:hover {
+    background: #f0f9ff;
+    color: #0369a1;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Right Side Glassmorphic Impact Stats List */
+  .impact-stats-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .impact-stat-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .impact-stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateX(8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .impact-icon-badge {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .impact-stat-info strong {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+  }
+
+  .impact-stat-info span {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    font-weight: 600;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .impact-section {
+      background-attachment: scroll;
+    }
+
+    .impact-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .impact-left-content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .impact-title {
+      font-size: 2.3rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .impact-section {
+      padding: 70px 0;
+    }
+
+    .impact-title {
+      font-size: 1.9rem;
+    }
+
+    .impact-stat-card {
+      padding: 16px 18px;
+      gap: 14px;
+    }
+
+    .impact-icon-badge {
+      width: 42px;
+      height: 42px;
+      font-size: 1.2rem;
+    }
+
+    .impact-stat-info strong {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+
+<!-- SECTION 8: IMPACT SECTION -->
+<section class="impact-section" id="our-impact">
+  <div class="impact-overlay"></div>
+
+  <div class="impact-container">
+    
+    <!-- Left Column: Impact Story -->
+    <div class="impact-left-content">
+      <div class="impact-pill">
+        💙 Our Impact
+      </div>
+
+      <h2 class="impact-title">
+        Better Access. <br><span>Healthier Communities.</span>
+      </h2>
+
+      <p class="impact-description">
+        We believe in the power of technology to remove barriers and bring quality healthcare to every individual, no matter where they are.
+      </p>
+
+      <a href="404.html" class="btn-impact-join" id="joinMissionBtn">
+        Join Our Mission &rarr;
+      </a>
+    </div>
+
+    <!-- Right Column: Key Stats List -->
+    <div class="impact-stats-stack">
+      
+      <!-- Stat 1 -->
+      <div class="impact-stat-card">
+        <div class="impact-icon-badge">💙</div>
+        <div class="impact-stat-info">
+          <strong>50,000+</strong>
+          <span>Lives Touched</span>
+        </div>
+      </div>
+
+      <!-- Stat 2 -->
+      <div class="impact-stat-card">
+        <div class="impact-icon-badge">🩺</div>
+        <div class="impact-stat-info">
+          <strong>100+</strong>
+          <span>Doctors Onboard</span>
+        </div>
+      </div>
+
+      <!-- Stat 3 -->
+      <div class="impact-stat-card">
+        <div class="impact-icon-badge">🏥</div>
+        <div class="impact-stat-info">
+          <strong>25+</strong>
+          <span>Specialties Covered</span>
+        </div>
+      </div>
+
+      <!-- Stat 4 -->
+      <div class="impact-stat-card">
+        <div class="impact-icon-badge">📍</div>
+        <div class="impact-stat-info">
+          <strong>10+</strong>
+          <span>Cities Reached</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('joinMissionBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+
+<style>
+  /* ================= SECTION 9: FUTURE GOALS ================= */
+  .future-goals-section {
+    padding: 110px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .future-goals-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Side Copy & Badges */
+  .goals-left-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .goals-tag {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #0284c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .goals-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+  }
+
+  .goals-title span {
+    color: #0284c7;
+  }
+
+  .goals-description {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 35px;
+    max-width: 540px;
+  }
+
+  /* 3 Feature Pills Stack */
+  .goals-feature-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .goal-feature-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .goal-feature-card:hover {
+    border-color: #38bdf8;
+    transform: translateX(6px);
+    box-shadow: 0 12px 25px rgba(2, 132, 199, 0.15);
+  }
+
+  .goal-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .goal-info strong {
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .goal-info span {
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+
+  /* Right Visual Illustration Wrapper */
+  .goals-right-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .goals-illustration-card {
+    width: 100%;
+    max-width: 460px;
+    height: 440px;
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    border-radius: 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.1);
+    border: 3px solid #ffffff;
+  }
+
+  .goals-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .goals-illustration-card:hover .goals-img {
+    transform: scale(1.05);
+  }
+
+  /* Floating Nodes on Illustration */
+  .floating-node {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border: 1px solid #e2e8f0;
+    padding: 10px 16px;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #0f172a;
+    z-index: 3;
+    transition: all 0.3s ease;
+  }
+
+  .floating-node:hover {
+    transform: scale(1.08);
+    border-color: #0284c7;
+    color: #0284c7;
+  }
+
+  .node-top-left {
+    top: 30px;
+    left: -15px;
+  }
+
+  .node-bottom-right {
+    bottom: 30px;
+    right: -15px;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .future-goals-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .goals-left-content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .goals-illustration-card {
+      max-width: 100%;
+      height: 380px;
+    }
+
+    .node-top-left {
+      left: 10px;
+    }
+
+    .node-bottom-right {
+      right: 10px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .future-goals-section {
+      padding: 70px 0;
+    }
+
+    .goals-title {
+      font-size: 2.1rem;
+    }
+
+    .goals-illustration-card {
+      height: 320px;
+      border-radius: 24px;
+    }
+
+    .floating-node {
+      font-size: 0.75rem;
+      padding: 8px 12px;
+    }
+  }
+</style>
+
+<!-- SECTION 9: FUTURE GOALS SECTION -->
+<section class="future-goals-section" id="future-goals">
+  <div class="future-goals-container">
+    
+    <!-- Left Copy & Goals List -->
+    <div class="goals-left-content">
+      <span class="goals-tag">Our Future</span>
+
+      <h2 class="goals-title">
+        What's <span>Next</span>?
+      </h2>
+
+      <p class="goals-description">
+        We're just getting started. Our journey is focused on innovation, expansion and creating a lasting impact in the world of healthcare.
+      </p>
+
+      <!-- 3 Feature Cards Stack -->
+      <div class="goals-feature-stack">
+        
+        <div class="goal-feature-card">
+          <div class="goal-icon-box">📍</div>
+          <div class="goal-info">
+            <strong>Expand to More Cities & Regions</strong>
+            <span>Bringing accessible care to remote areas</span>
+          </div>
+        </div>
+
+        <div class="goal-feature-card">
+          <div class="goal-icon-box">🏥</div>
+          <div class="goal-info">
+            <strong>Add More Specialties & Services</strong>
+            <span>Covering holistic and preventative care</span>
+          </div>
+        </div>
+
+        <div class="goal-feature-card">
+          <div class="goal-icon-box">🤖</div>
+          <div class="goal-info">
+            <strong>Build AI-Powered Health Tools</strong>
+            <span>Smarter diagnostic assistance and triage</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right Graphic Visual -->
+    <div class="goals-right-visual">
+      <div class="goals-illustration-card">
+        
+        <!-- Floating Nodes -->
+        <div class="floating-node node-top-left">
+          <span>🚀 Rapid Expansion</span>
+        </div>
+        <div class="floating-node node-bottom-right">
+          <span>💡 AI Diagnostics</span>
+        </div>
+
+        <img src="./blog2.webp" alt="Future Healthcare Innovation" class="goals-img" onerror="this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'" />
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+  /* ================= SECTION 10: FINAL CTA SECTION WITH BACKGROUND IMAGE ================= */
+  .final-cta-section {
+    padding: 120px 0;
+    position: relative;
+    background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* Rich Glassmorphism Dark Gradient Overlay */
+  .final-cta-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 132, 199, 0.82) 50%, rgba(15, 23, 42, 0.95) 100%);
+    backdrop-filter: blur(4px);
+    z-index: 1;
+  }
+
+  /* Ambient Glow Circle Background */
+  .final-cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    background: rgba(56, 189, 248, 0.22);
+    filter: blur(120px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .final-cta-container {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Side Copy */
+  .final-cta-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .final-cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #e0f2fe;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .final-cta-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .final-cta-title span {
+    color: #38bdf8;
+  }
+
+  .final-cta-subtitle {
+    font-size: 1.1rem;
+    color: #f1f5f9;
+    line-height: 1.7;
+    margin-bottom: 35px;
+    max-width: 540px;
+  }
+
+  /* Buttons Group */
+  .final-cta-btn-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-final-primary {
+    background: #ffffff;
+    color: #0284c7;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .btn-final-primary:hover {
+    background: #f0f9ff;
+    color: #0369a1;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .btn-final-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: all 0.35s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .btn-final-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
+    transform: translateY(-3px);
+  }
+
+  /* Right Visual Medical Heartbeat Graphic */
+  .final-cta-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heartbeat-card {
+    width: 100%;
+    max-width: 440px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    position: relative;
+    transition: all 0.4s ease;
+  }
+
+  .heartbeat-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(56, 189, 248, 0.6);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .heart-pulse-icon {
+    font-size: 4.5rem;
+    margin-bottom: 16px;
+    animation: heartPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes heartPulse {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.15); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    70% { transform: scale(1); }
+  }
+
+  .final-handwritten-note {
+    font-family: 'Caveat', cursive, sans-serif;
+    color: #38bdf8;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 992px) {
+    .final-cta-section {
+      background-attachment: scroll; /* Ensures performance on touch devices */
+    }
+
+    .final-cta-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .final-cta-content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .final-cta-title {
+      font-size: 2.5rem;
+    }
+
+    .final-cta-btn-group {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .final-cta-section {
+      padding: 75px 0;
+    }
+
+    .final-cta-title {
+      font-size: 2rem;
+    }
+
+    .final-cta-btn-group {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn-final-primary,
+    .btn-final-secondary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .heartbeat-card {
+      height: 240px;
+    }
+
+    .heart-pulse-icon {
+      font-size: 3.5rem;
+    }
+
+    .final-handwritten-note {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+
+<!-- SECTION 10: FINAL CTA SECTION -->
+<section class="final-cta-section" id="final-cta">
+  <div class="final-cta-overlay"></div>
+
+  <div class="final-cta-container">
+    
+    <!-- Left Column: Primary Pitch & Buttons -->
+    <div class="final-cta-content">
+      <div class="final-cta-pill">
+        💙 Be a Part of Our Journey
+      </div>
+
+      <h2 class="final-cta-title">
+        Together for a <br><span>Healthier Tomorrow</span>
+      </h2>
+
+      <p class="final-cta-subtitle">
+        Whether you're a patient, a doctor or someone who believes in better healthcare — you're welcome here.
+      </p>
+
+      <div class="final-cta-btn-group">
+        <a href="404.html" class="btn-final-primary" id="finalBookBtn">
+          Book Consultation &rarr;
+        </a>
+        <a href="404.html" class="btn-final-secondary" id="finalLearnBtn">
+          Learn More
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: Visual Heartbeat Container -->
+    <div class="final-cta-visual">
+      <div class="heartbeat-card">
+        <div class="heart-pulse-icon">💙</div>
+        
+        <div class="final-handwritten-note">
+          Healthcare is a team effort ♡
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.getElementById('finalBookBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+
+  document.getElementById('finalLearnBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    window.location.href = '404.html';
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  /* ================= FOOTER SECTION STYLING ================= */
+  .footer-section {
+    background-color: black;
+    color: #94a3b8;
+    padding: 80px 0 30px 0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+  }
+
+  .footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Grid Layout with top-aligned columns */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 60px;
+  }
+
+  /* Individual Footer Column Container */
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* Fixed Height Slot for Header / Logo Area to Ensure Perfect Line Alignment */
+  .footer-header-slot {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .footer-logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer-logo-fallback {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Standardized Column Headings */
+  .footer-col-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    padding-bottom: 8px;
+    position: relative;
+    display: inline-block;
+    line-height: 1.2;
+  }
+
+  .footer-col-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background-color: #0284c7;
+    border-radius: 2px;
+  }
+
+  /* Paragraph Text in Brand Column */
+  .footer-brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0 0 24px 0;
+    max-width: 300px;
+  }
+
+  /* Circular Social Icons */
+  .footer-social-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .social-circle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-circle-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+    transition: fill 0.2s ease;
+  }
+
+  .social-circle-btn:hover {
+    background-color: #0284c7;
+    transform: translateY(-2px);
+  }
+
+  /* Uniform Link Lists (Strict Vertical Alignment with Headings) */
+  .footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .footer-links-list li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-links-list a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-links-list a span {
+    color: #0284c7;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+
+  .footer-links-list a:hover {
+    color: #38bdf8;
+    transform: translateX(4px);
+  }
+
+  /* Contact List Items */
+  .footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  .footer-contact-icon {
+    color: #0284c7;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Subscribe Section Layout */
+  .subscribe-wrapper {
+    width: 100%;
+  }
+
+  .subscribe-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+  }
+
+  .subscribe-input-group {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+  }
+
+  .subscribe-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.85rem;
+  }
+
+  .subscribe-input::placeholder {
+    color: #64748b;
+  }
+
+  .btn-subscribe-send {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .btn-subscribe-send svg {
+    width: 14px;
+    height: 14px;
+    fill: #ffffff;
+  }
+
+  .btn-subscribe-send:hover {
+    background-color: #0369a1;
+  }
+
+  .subscribe-error-msg {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    min-height: 16px;
+  }
+
+  /* Footer Bottom Bar */
+  .footer-bottom {
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-bottom-links a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-bottom-links a:hover {
+    color: #38bdf8;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 992px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 35px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer-section {
+      padding: 60px 0 25px 0;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-header-slot {
+      height: auto;
+      margin-bottom: 15px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- FOOTER SECTION -->
+<footer class="footer-section" id="footer">
+  <div class="footer-container">
+    
+    <div class="footer-grid">
+      
+      <!-- Column 1: Logo & Brand Information -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+         <br> <a href="./index.html">
+          <img src="./logo.webp" alt="Stackly Logo" class="footer-logo-img" onerror="this.style.display='none'; document.getElementById('footerLogoFallback').style.display='flex';" /></a>
+          <div id="footerLogoFallback" class="footer-logo-fallback" style="display:none;">
+            
+          </div>
+        </div>
+
+        <p class="footer-brand-desc">
+          Delivering patient-centered medical care with compassion, clinical excellence, and state-of-the-art innovation.
+        </p>
+
+        <div class="footer-social-links">
+          <a href="404.html" class="social-circle-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7.5v-3H10V9.5C10 7.01 11.49 5.6 13.77 5.6c1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 3h-2.33v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="404.html" class="social-circle-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Quick Links</h4>
+        </div>
+        <ul class="footer-links-list">
+           <li><a href="./index.html"><span>&gt;</span> Home</a></li>
+          <li><a href="./about.html"><span>&gt;</span> About Us</a></li>
+          <li><a href="./our serves.html"><span>&gt;</span> Services</a></li>
+          <li><a href="./doctors.html"><span>&gt;</span> Doctors</a></li>
+          <li><a href="./appointments.html"><span>&gt;</span> Appoinments</a></li>
+          <li><a href="./contact.html"><span>&gt;</span> Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Our Services -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Our Services</h4>
+        </div>
+        <ul class="footer-links-list">
+          <li><a href="404.html"><span>&gt;</span> Primary Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Health Plans</a></li>
+          <li><a href="404.html"><span>&gt;</span> Patient Reviews</a></li>
+          <li><a href="404.html"><span>&gt;</span> Specialist Care</a></li>
+          <li><a href="404.html"><span>&gt;</span> Working Hours</a></li>
+           <li><a href="404.html"><span>&gt;</span> Checkups List</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact Info & Newsletter -->
+      <div class="footer-col">
+        <div class="footer-header-slot">
+          <h4 class="footer-col-title">Contact Info</h4>
+        </div>
+        
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📍</span>
+            <span>Salem, Tamil Nadu, India</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">📞</span>
+            <span>+91 89718 62253</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon">✉️</span>
+            <span>telemedicine@stacklyhealth.com</span>
+          </div>
+        </div>
+
+        <div class="subscribe-wrapper">
+          <div class="subscribe-title">Subscribe for Health Tips</div>
+          <div class="subscribe-input-group">
+            <input type="email" id="footerSubscribeEmail" class="subscribe-input" placeholder="Enter your email" />
+            <button type="button" id="footerSubscribeBtn" class="btn-subscribe-send" aria-label="Subscribe">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </div>
+          <div class="subscribe-error-msg" id="footerSubscribeError"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Legal -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly Healthcare. All Rights Reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms of Service</a>
+        <a href="404.html">Patient Rights</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  document.getElementById('footerSubscribeBtn').addEventListener('click', function() {
+    const emailInput = document.getElementById('footerSubscribeEmail');
+    const email = emailInput.value.trim().toLowerCase();
+    const errorMsg = document.getElementById('footerSubscribeError');
+
+    if (!email) {
+      errorMsg.textContent = 'Please enter your email address.';
+      return;
+    }
+
+    if (!email.endsWith('@gmail.com')) {
+      errorMsg.textContent = 'Email address must end with @gmail.com';
+      return;
+    }
+
+    errorMsg.textContent = '';
+    window.location.href = '404.html';
+  });
+</script>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Healthcare Admin Portal</title>
+    
+    <!-- CSS & Font Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./patient.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+<div class="dashboard-container">
+        
+        <!-- ==========================================================================
+           TELEMEDICINE LEFT SIDEBAR
+           ========================================================================== -->
+        <aside class="sidebar" id="sidebarPanel">
+            <div class="sidebar-scrollable">
+                <div class="brand">
+                     <div class="container nav-container">
+                        <a href="index.html" class="logo">
+                            <img src="./logo.webp" alt="Stackly Healthcare Logo" width="150px">
+                        </a>
+                     </div>
+                </div>
+                
+                <!-- GROUP 1: CLINICAL CARE & PATIENTS -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Clinical Care & Patients</div>
+                    <ul class="menu-list">
+                        <li class="menu-item active" onclick="switchTab('consultations', this)">
+                            <i class="fa-solid fa-user-doctor"></i>
+                            <span>Virtual Consultations</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('patients', this)">
+                            <i class="fa-solid fa-hospital-user"></i>
+                            <span>Patient EHR Records</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('pharmacy', this)">
+                            <i class="fa-solid fa-pills"></i>
+                            <span>Pharmacy & Supplies</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- GROUP 2: HOSPITAL PERFORMANCE -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Hospital Analytics</div>
+                    <ul class="menu-list">
+                        <li class="menu-item" onclick="switchTab('appointments', this)">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Consultation Volume</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('insurance', this)">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                            <span>Insurance & Billing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- GROUP 3: TELE-ICU & SPECIALISTS -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Emergency & Operations</div>
+                    <ul class="menu-list">
+                        <li class="menu-item" onclick="switchTab('emergency', this)">
+                            <i class="fa-solid fa-truck-medical"></i>
+                            <span>Emergency Response</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('specialists', this)">
+                            <i class="fa-solid fa-stethoscope"></i>
+                            <span>Specialist Network</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('compliance', this)">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>HIPAA Compliance</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn-outline" onclick="handleLogout()">
+                    <i class="fa-solid fa-power-off"></i>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ==========================================================================
+           MAIN CONTENT AREA
+           ========================================================================== -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left-cluster">
+                    <div class="mobile-toggle" onclick="toggleMobileSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search patient ID, doctor profile, or EHR...">
+                    </div>
+                </div>
+
+                <div class="header-user-box">
+                    <div class="user-avatar" id="avatarLetter">M</div>
+                    <div class="user-details">
+                        <h4 id="profileName">Patient</h4>
+                        <p id="profileEmail">cmo@stacklyhealth.com</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                
+                <!-- 1. VIRTUAL CONSULTATIONS PANEL -->
+                <div id="panel-consultations" class="view-panel active-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Virtual Consultations Portfolio</h1>
+                            <p>Monitor live video appointments, triage priority queues, and remote doctor activity.</p>
+                        </div>
+                        <div class="btn-group">
+                          
+                            <a href="./404.html"><button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Schedule Session</button></a>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="card">
+                            <div class="card-info"><p>Active Video Rooms</p><h3>34 Sessions</h3></div>
+                            <div class="card-icon-box" style="background:#e0f2fe;color:#0284c7;"><i class="fa-solid fa-video"></i></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-info"><p>Today's Completed Visits</p><h3>184 Patients</h3></div>
+                            <div class="card-icon-box" style="background:#e6fcf5;color:#00875a;"><i class="fa-solid fa-square-check"></i></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-info"><p>Avg Consultation Fee</p><h3>₹650.00</h3></div>
+                            <div class="card-icon-box" style="background:#fff0b3;color:#947200;"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <div class="chart-header-row">
+                            <h3>Consultation Distribution by Specialty</h3>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="consultationsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PATIENT EHR RECORDS PANEL -->
+                <div id="panel-patients" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Electronic Health Records (EHR)</h1>
+                            <p>Manage patient histories, active prescriptions, lab diagnostic attachments, and vital tracking.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="./404.html"><button class="btn btn-sky"><i class="fa-solid fa-user-plus"></i> Register Patient</button></a>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <h3>Recent Patient Access Records</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>Patient Name</th><th>Assigned Specialist</th><th>Diagnosis Category</th><th>Last Visit</th><th>Record Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Rahul Verma</strong></td>
+                                    <td>Dr. A. Sharma (Cardiology)</td>
+                                    <td>Hypertension Follow-up</td>
+                                    <td>Today, 10:30 AM</td>
+                                    <td><span class="status-pill active">Verified EHR</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Priya Sundaram</strong></td>
+                                    <td>Dr. S. Nair (Pediatrics)</td>
+                                    <td>Seasonal Viral Fever</td>
+                                    <td>Yesterday</td>
+                                    <td><span class="status-pill pending">Lab Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. PHARMACY & SUPPLIES PANEL -->
+                <div id="panel-pharmacy" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Pharmacy & E-Prescription Logistics</h1>
+                            <p>Track e-prescriptions, home delivery dispatch status, and essential pharmaceutical stock.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="./404.html"><button class="btn btn-secondary"><i class="fa-solid fa-truck-medical"></i> Dispatch Orders</button></a>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="chart-box-container">
+                            <div class="chart-header-row">
+                                <h3>Prescription Fulfillment Rate (%)</h3>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="pharmacyChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="media-graphic" style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80');">
+                            <div class="media-overlay"></div>
+                            <div class="media-content">
+                                <h3>Digital Rx Safety Protocol</h3>
+                                <p>Automated verification ensures all electronic prescriptions strictly comply with healthcare guidelines.</p>
+                                <a href="./404.html"><button class="btn btn-sky">View Pharmacy Hubs</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. CONSULTATION VOLUME PANEL -->
+                <div id="panel-appointments" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Tele-Health Consultation Analytics</h1>
+                            <p>Track monthly patient volume growth, recurring OPD visits, and virtual bed utilization.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="./404.html"><button class="btn btn-primary"><i class="fa-solid fa-file-invoice"></i> Revenue Report</button></a>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <div class="chart-header-row">
+                            <h3>Monthly Completed Tele-Consultations</h3>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="appointmentsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. INSURANCE & BILLING PANEL -->
+                <div id="panel-insurance" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Insurance Claims & Billing Portal</h1>
+                            <p>Manage cashless claims, third-party administration approvals, and patient payment gateways.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="./404.html"><button class="btn btn-sky">Configure Gateways</button></a>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="chart-box-container">
+                            <div class="chart-header-row">
+                                <h3>Claim Settlement Breakdown</h3>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="insuranceChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="media-graphic" style="background-image: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80');">
+                            <div class="media-overlay"></div>
+                            <div class="media-content">
+                                <h3>Automated TPA Processing</h3>
+                                <p>Speed up claims verification with direct integrations to major medical insurance providers.</p>
+                                <a href="./404.html"><button class="btn btn-primary">Review Pending Claims</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. EMERGENCY RESPONSE PANEL -->
+                <div id="panel-emergency" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>24/7 Emergency Triage Pipeline</h1>
+                            <p>Real-time oversight of critical tele-ICU feeds, emergency call queues, and ambulance dispatches.</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <div class="chart-header-row">
+                            <h3>Weekly Emergency Triage Response Time (Secs)</h3>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="emergencyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. SPECIALIST NETWORK PANEL -->
+                <div id="panel-specialists" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Specialist Network & On-Call Roster</h1>
+                            <p>Coordinate duty schedules for cardiologists, neurologists, pediatricians, and general physicians.</p>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="media-graphic" style="background-image: url('https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80');">
+                            <div class="media-overlay"></div>
+                            <div class="media-content">
+                                <h3>Doctor Credentialing</h3>
+                                <p>Verify medical council licensing, board certifications, and digital signature authorization.</p>
+                                <a href="./404.html"><button class="btn btn-primary">Doctor Verification Hub</button></a>
+                            </div>
+                        </div>
+                        <div class="media-graphic" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80');">
+                            <div class="media-overlay"></div>
+                            <div class="media-content">
+                                <h3>Shift Management</h3>
+                                <p>Monitor live specialist availability and schedule 24/7 tele-consultation shifts.</p>
+                                <a href="./404.html"><button class="btn btn-sky">Open Duty Roster</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. HIPAA COMPLIANCE PANEL -->
+                <div id="panel-compliance" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>HIPAA Compliance & Security Standards</h1>
+                            <p>Ensure end-to-end encryption across video channels, audit logs, and confidential patient records.</p>
+                        </div>
+                        <div class="btn-group">
+                            <a href="./404.html"><button class="btn btn-primary">Run Security Audit</button></a>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <h3>Active System Audit Logs</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>Security Module</th><th>Encryption Level</th><th>Compliance Status</th><th>Last Audit</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>EHR Database Vault</strong></td>
+                                    <td>AES-256 Bit Encrypted</td>
+                                    <td><span class="status-pill active">HIPAA Compliant</span></td>
+                                    <td>2 Hours Ago</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Video Call Tele-Stream</strong></td>
+                                    <td>End-to-End TLS/SRTP</td>
+                                    <td><span class="status-pill active">Secure Session</span></td>
+                                    <td>Active Live</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+      </main>
+    </div>
+
+    <!-- Scripting Area -->
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedName = localStorage.getItem('currentUser') || "Patient";
+        const savedEmail = localStorage.getItem('currentUserEmail') || "cmo@stacklyhealth.com";
+
+        document.getElementById('profileName').innerText = savedName;
+        document.getElementById('profileEmail').innerText = savedEmail;
+        document.getElementById('avatarLetter').innerText = savedName.trim().charAt(0).toUpperCase();
+
+        initTelemedicineCharts();
+    });
+
+    function toggleMobileSidebar() {
+        document.getElementById('sidebarPanel').classList.toggle('open');
+    }
+
+    function switchTab(panelId, menuElement) {
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active-panel'));
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+
+        document.getElementById(`panel-${panelId}`).classList.add('active-panel');
+        menuElement.classList.add('active');
+
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebarPanel').classList.remove('open');
+        }
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUserEmail');
+        window.location.href = 'index.html';
+    }
+
+    function initTelemedicineCharts() {
+        // 1. Specialty Distribution Pie Chart
+        new Chart(document.getElementById('consultationsChart'), {
+            type: 'pie',
+            data: {
+                labels: ['General Medicine', 'Cardiology', 'Pediatrics', 'Dermatology'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#0a8f8f', '#0284c7', '#065e5e', '#cbd5e1']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 2. Pharmacy Logistics Line Chart
+        new Chart(document.getElementById('pharmacyChart'), {
+            type: 'line',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'],
+                datasets: [{
+                    label: 'Prescription Fulfillment Rate (%)',
+                    data: [92, 95, 98, 96, 99, 97],
+                    borderColor: '#0a8f8f',
+                    backgroundColor: 'rgba(10, 143, 143, 0.1)',
+                    fill: true
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 3. Completed Consultations Line Chart
+        new Chart(document.getElementById('appointmentsChart'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Monthly Tele-Consultations',
+                    data: [1200, 1800, 1600, 2400, 3100, 4200],
+                    borderColor: '#0284c7',
+                    backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                    fill: true
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 4. Insurance Settlement Doughnut Chart
+        new Chart(document.getElementById('insuranceChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Approved Cashless', 'Under Verification', 'Self-Paid OPD'],
+                datasets: [{
+                    data: [65, 20, 15],
+                    backgroundColor: ['#0a8f8f', '#f59e0b', '#cbd5e1']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // 5. Emergency Response Bar Chart
+        new Chart(document.getElementById('emergencyChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [{
+                    label: 'Avg Response Time (Seconds)',
+                    data: [14, 11, 15, 9, 12],
+                    backgroundColor: '#065e5e'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+
+    
+    </script>
+
+    
+</body>
+</html>

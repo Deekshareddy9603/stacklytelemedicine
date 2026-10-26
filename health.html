@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Healthcare | Clinical Provider Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="health.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- ==========================================================================
+           EXPANDED SIDEBAR PANELS BY HEALTHCARE CATEGORY
+           ========================================================================== -->
+        <aside class="sidebar" id="sidebarPanel">
+            <div class="sidebar-scrollable">
+                <div class="brand">
+                    <div class="container nav-container">
+                        <a href="index.html" class="logo">
+                            <img src="./logo.webp" alt="Stackly Health Logo" width="150px">
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- CATEGORY 1: CLINICAL METRICS -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Clinical Operations</div>
+                    <ul class="menu-list">
+                        <li class="menu-item active" onclick="switchTab('overview', this)">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Health Network Overview</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('sales-revenue', this)">
+                            <i class="fa-solid fa-receipt"></i>
+                            <span>Billing & Consult Revenue</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CATEGORY 2: PATIENT & PRESCRIPTION LOGISTICS -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Patient Services</div>
+                    <ul class="menu-list">
+                        <li class="menu-item" onclick="switchTab('courses', this)">
+                            <i class="fa-solid fa-user-doctor"></i>
+                            <span>Specialist Directory</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('inventory-resources', this)">
+                            <i class="fa-solid fa-pills"></i>
+                            <span>Pharmacy & Supplies</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CATEGORY 3: TELEHEALTH INFRASTRUCTURE -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Telehealth Logistics</div>
+                    <ul class="menu-list">
+                        <li class="menu-item" onclick="switchTab('pipelines', this)">
+                            <i class="fa-solid fa-notes-medical"></i>
+                            <span>Triage & Appointments</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('cdn-networks', this)">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <span>Encrypted Video Streams</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CATEGORY 4: INSTITUTIONAL & COMPLIANCE -->
+                <div class="sidebar-group">
+                    <div class="sidebar-group-title">Institutional Care</div>
+                    <ul class="menu-list">
+                        <li class="menu-item" onclick="switchTab('vip-tiers', this)">
+                            <i class="fa-solid fa-id-card-clip"></i>
+                            <span>Patient Care Plans</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('enterprise', this)">
+                            <i class="fa-solid fa-hospital"></i>
+                            <span>Hospital Partners</span>
+                        </li>
+                        <li class="menu-item" onclick="switchTab('support-tickets', this)">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Clinical Desk Tickets</span>
+                            <span class="badge">3 Urgent</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-logout-box">
+                <button class="logout-btn-full" onclick="handleLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ==========================================================================
+           MAIN CONTENT BODY WRAPPER
+           ========================================================================== -->
+       <main class="main-content">
+            <header class="top-header">
+                <div class="header-left-cluster">
+                    <div class="mobile-toggle" onclick="toggleMobileSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search patients, doctors, prescriptions...">
+                    </div>
+                </div>
+
+                <div class="header-user-box">
+                    <div class="user-avatar" id="avatarLetter">D</div>
+                    <div class="user-details">
+                        <h4 id="profileName">Doctor / Specialist</h4>
+                        <p id="profileEmail">doctor@stacklyhealth.com</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                
+                <!-- PANEL 1: HEALTH NETWORK OVERVIEW -->
+                <div id="panel-overview" class="view-panel active-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Provider Ecosystem Overview</h1>
+                            <p>Real-time clinical metrics across Stackly virtual care units.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('refresh-matrix')">
+                                <i class="fa-solid fa-rotate"></i> Sync Live Vitals
+                            </button>
+                            <button class="btn btn-secondary" onclick="goToErrorPage('export-records')">
+                                <i class="fa-solid fa-file-export"></i> Export Health Logs
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="card">
+                            <div class="card-info"><p>Total Registered Patients</p><h3>18,450</h3></div>
+                            <div class="card-icon-box" style="background:#e0f2fe;color:#0ea5e9;"><i class="fa-solid fa-hospital-user"></i></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-info"><p>Active Practitioners</p><h3>245 Doctors</h3></div>
+                            <div class="card-icon-box" style="background:#d1fae5;color:#10b981;"><i class="fa-solid fa-user-md"></i></div>
+                        </div>
+                        <div class="card">
+                            <div class="card-info"><p>Consultation Success Rate</p><h3>98.2%</h3></div>
+                            <div class="card-icon-box" style="background:#fef3c7;color:#f59e0b;"><i class="fa-solid fa-heart-circle-check"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="media-text-content">
+                            <h3>24/7 Telemedicine Operational Milestones</h3>
+                            <p>Patient recovery tracking and remote vital monitoring have improved significantly since the deployment of Stackly's encrypted clinical consultation suite.</p>
+                            <br>
+                            <p>Prescription processing wait times dropped by 42% after the direct electronic health record (EHR) sync protocol was activated.</p>
+                            <br>
+                            <button class="btn btn-outline" onclick="goToErrorPage('view-ehr-logs')">
+                                <i class="fa-solid fa-shield-virus"></i> View HIPAA Audit Report
+                            </button>
+                        </div>
+                        <div class="media-graphic">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80" class="image-placeholder" alt="Doctor Consultation">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 2: BILLING & REVENUE -->
+                <div id="panel-sales-revenue" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Consultation & Claims Revenue</h1>
+                            <p>Monitor patient billing, insurance claim payouts, and clinical revenue streams.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('payout-gateway')">
+                                <i class="fa-solid fa-credit-card"></i> Manage Payout Gateways
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <h3>Gross Healthcare Claims Processed ($)</h3>
+                        <div class="canvas-wrapper">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 3: SPECIALIST DIRECTORY -->
+                <div id="panel-courses" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Medical Departments & Specialties</h1>
+                            <p>Manage medical faculties, active practitioners, and virtual clinical shifts.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-secondary" onclick="goToErrorPage('add-specialist')">
+                                <i class="fa-solid fa-user-plus"></i> Add New Practitioner
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box" style="margin-bottom: 25px;">
+                        <div class="media-graphic">
+                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80" class="image-placeholder" alt="Medical Specialists">
+                        </div>
+                        <div class="media-text-content">
+                            <h3>Specialist Roster Overview</h3>
+                            <p>Our network spans General Medicine, Cardiology, Pediatrics, Mental Health, and Dermatology, offering patients rapid 15-minute response times.</p>
+                            <br>
+                            <button class="btn btn-outline" onclick="goToErrorPage('specialist-schedule')">
+                                <i class="fa-solid fa-calendar-check"></i> Manage Rosters & Shifts
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <h3>Consultation Volume by Department</h3>
+                        <div class="canvas-wrapper">
+                            <canvas id="coursesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 4: PHARMACY & SUPPLIES -->
+                <div id="panel-inventory-resources" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Pharmaceuticals & Lab Resources</h1>
+                            <p>Track prescription stock, diagnostic kit allocations, and API links to partner pharmacies.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('order-supplies')">
+                                <i class="fa-solid fa-truck-medical"></i> Restock Supplies
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <h3>Pharmacy Resource Ledger</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>Resource Name</th><th>Classification</th><th>Stock Available</th><th>Unit Cost</th><th>Status</th><th>Action</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Rapid Viral Testing Kits</strong></td>
+                                    <td>Diagnostic Gear</td>
+                                    <td>1,420 Kits</td>
+                                    <td>$12.50</td>
+                                    <td><span class="status-pill active">In Stock</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('kit-details')">Details</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Diabetes Glucose Strips</strong></td>
+                                    <td>Chronic Care</td>
+                                    <td>65 Units</td>
+                                    <td>$24.00</td>
+                                    <td><span class="status-pill pending">Low Stock</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('reorder-strips')">Reorder</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tele-Stethoscope Hardware Units</strong></td>
+                                    <td>Remote Device</td>
+                                    <td>0 Units</td>
+                                    <td>$149.00</td>
+                                    <td><span class="status-pill danger">Depleted</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('backorder-hardware')">Backorder</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PANEL 5: TRIAGE & APPOINTMENTS -->
+                <div id="panel-pipelines" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Patient Triage Pipelines</h1>
+                            <p>Monitor current patient intake queues, emergency escalations, and consult approvals.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('triage-rules')">
+                                <i class="fa-solid fa-sliders"></i> Configure Triage Rules
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <h3>Weekly Completed Virtual Consultations</h3>
+                        <div class="canvas-wrapper">
+                            <canvas id="pipelineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 6: ENCRYPTED VIDEO STREAMS -->
+                <div id="panel-cdn-networks" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Telehealth Stream Performance</h1>
+                            <p>Ensure zero-latency HD video connections and HIPAA-compliant data encryption.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-secondary" onclick="goToErrorPage('bandwidth-test')">
+                                <i class="fa-solid fa-gauge-high"></i> Test Server Nodes
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="chart-box-container">
+                            <h3>Encrypted Data Stream Volume (GB)</h3>
+                            <div class="canvas-wrapper">
+                                <canvas id="cdnChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="media-text-content">
+                            <h3>Real-Time Streaming Health</h3>
+                            <p>Our end-to-end encrypted video channels maintain high fidelity even on low-bandwidth patient networks.</p>
+                            <br>
+                            <p>Zero downtime reported across primary telemedicine relay servers over the last 90 days.</p>
+                            <br>
+                            <button class="btn btn-primary" onclick="goToErrorPage('network-diagnostics')">
+                                <i class="fa-solid fa-network-wired"></i> Run Diagnostics
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 7: PATIENT CARE PLANS -->
+                <div id="panel-vip-tiers" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Patient Membership & Care Plans</h1>
+                            <p>Manage subscription packages, family health coverage, and senior care tiers.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-outline" onclick="goToErrorPage('create-care-plan')">
+                                <i class="fa-solid fa-plus"></i> New Care Scheme
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="chart-box-container">
+                        <h3>Distribution of Patient Membership Plans</h3>
+                        <div class="canvas-wrapper">
+                            <canvas id="vipChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 8: HOSPITAL PARTNERS -->
+                <div id="panel-enterprise" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Hospital Networks & Enterprise Partners</h1>
+                            <p>Integrate tertiary care centers, emergency ambulance networks, and clinic portals.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('add-hospital-partner')">
+                                <i class="fa-solid fa-hospital-user"></i> Connect Partner
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="split-media-box">
+                        <div class="media-graphic">
+                            <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=600&q=80" class="image-placeholder" alt="Hospital Building">
+                        </div>
+                        <div class="media-text-content">
+                            <h3>Enterprise Hospital Networks</h3>
+                            <p>Direct electronic transfers are enabled for 18 regional hospital ICUs, enabling seamless patient escalation when critical in-person care is needed.</p>
+                            <br>
+                            <p>Custom administrative rights allow hospital admins to manage bed availability in real-time.</p>
+                            <br>
+                            <button class="btn btn-outline" onclick="goToErrorPage('partner-api-docs')">
+                                <i class="fa-solid fa-code"></i> Integration API Portal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL 9: CLINICAL TICKETS -->
+                <div id="panel-support-tickets" class="view-panel">
+                    <div class="panel-heading-wrapper">
+                        <div class="panel-heading">
+                            <h1>Practitioner & Desk Support</h1>
+                            <p>Review technical inquiries, prescription sync errors, and urgent doctor requests.</p>
+                        </div>
+                        <div class="btn-action-hub">
+                            <button class="btn btn-primary" onclick="goToErrorPage('new-support-ticket')">
+                                <i class="fa-solid fa-circle-plus"></i> Open Support Ticket
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <h3>Active Clinical Helpdesk Incidents</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr><th>Ticket ID</th><th>Submitter</th><th>Category</th><th>Priority Status</th><th>Action</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>#TK-9041</strong></td>
+                                    <td>Dr. Sarah Jenkins</td>
+                                    <td>Video Call Audio Disconnect</td>
+                                    <td><span class="status-pill danger">Critical</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('ticket-9041')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#TK-8992</strong></td>
+                                    <td>Dr. Alan Vance</td>
+                                    <td>Prescription Signature Key Sync</td>
+                                    <td><span class="status-pill pending">In Progress</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('ticket-8992')">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#TK-8850</strong></td>
+                                    <td>Nurse Emily Rose</td>
+                                    <td>Lab Report PDF Generation Delay</td>
+                                    <td><span class="status-pill active">Resolved</span></td>
+                                    <td><button class="btn-sm" onclick="goToErrorPage('ticket-8850')">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- FALLBACK 404 INTERFACE CONTAINER -->
+                <div id="panel-404" class="view-panel">
+                    <div class="error-404-box">
+                        <h1>404</h1>
+                        <h2>Health Interface Section Missing</h2>
+                        <p>The clinical route parameters you are requesting do not exist within the current system framework.</p>
+                        <button class="btn btn-primary" onclick="switchTab('overview', document.querySelector('.menu-item'))">
+                            <i class="fa-solid fa-house-medical"></i> Return to Provider Overview
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+       ROUTING ENGINE, SECURITY CHECK, AND DYNAMIC CHARTS INJECTOR
+       ========================================================================== -->
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const userRole = localStorage.getItem('userRole');
+
+        // Security Role Guard: Redirect patients back to patient dashboard
+        if (!userRole) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        if (userRole === 'patient') {
+            window.location.href = 'patient.html';
+            return;
+        }
+
+        const savedName = localStorage.getItem('currentUser') || "Dr. Chief Medical Officer";
+        const savedEmail = localStorage.getItem('currentUserEmail') || "cmo@stacklyhealth.com";
+
+        document.getElementById('profileName').innerText = savedName;
+        document.getElementById('profileEmail').innerText = savedEmail;
+        document.getElementById('avatarLetter').innerText = savedName.trim().charAt(0).toUpperCase();
+
+        // Initialize Medical Analytics Visual Engines
+        initHealthAnalytics();
+    });
+
+    function toggleMobileSidebar() {
+        document.getElementById('sidebarPanel').classList.toggle('open');
+    }
+
+    function switchTab(panelId, menuElement) {
+        const targetPanel = document.getElementById(`panel-${panelId}`);
+        
+        document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active-panel'));
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+
+        if (targetPanel) {
+            targetPanel.classList.add('active-panel');
+            if (menuElement) menuElement.classList.add('active');
+        } else {
+            document.getElementById('panel-404').classList.add('active-panel');
+        }
+
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebarPanel').classList.remove('open');
+        }
+    }
+
+    // Helper function to redirect all generic action buttons to error.html
+    function goToErrorPage(actionName) {
+        window.location.href = '404.html';
+    }
+
+    function handleLogout() {
+        localStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    function initHealthAnalytics() {
+        // Sales & Revenue Graph (Claims & Consults)
+        new Chart(document.getElementById('salesChart'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Clinical Revenue ($)',
+                    data: [42000, 58000, 51000, 79000, 88000, 112000],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.08)',
+                    fill: true,
+                    tension: 0.25
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Specialty Distribution Chart
+        new Chart(document.getElementById('coursesChart'), {
+            type: 'pie',
+            data: {
+                labels: ['General Practice', 'Cardiology', 'Pediatrics', 'Mental Health', 'Dermatology'],
+                datasets: [{
+                    data: [35, 20, 18, 15, 12],
+                    backgroundColor: ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Weekly Triage Pipeline Progress Bar Graph
+        new Chart(document.getElementById('pipelineChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Virtual Consultations Completed',
+                    data: [120, 145, 132, 168, 160, 95, 80],
+                    backgroundColor: '#10b981'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Telehealth Video Transmission Activity Data
+        new Chart(document.getElementById('cdnChart'), {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                datasets: [{
+                    label: 'Video Stream Bandwidth (GB)',
+                    data: [12, 8, 34, 62, 58, 28],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Patient Care Schemes Doughnut Chart
+        new Chart(document.getElementById('vipChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Standard Telehealth', 'Family Care Plan', 'Enterprise Corporate Plan'],
+                datasets: [{
+                    data: [50, 35, 15],
+                    backgroundColor: ['#e5e7eb', '#0ea5e9', '#10b981']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+    </script>
+</body>
+</html>
